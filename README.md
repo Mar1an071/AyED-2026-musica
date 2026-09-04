@@ -8,7 +8,7 @@ Repositorio del grupo. Partir de este esqueleto. No borrar la estructura de `src
 | -------------- | ------------------------- | ------------ |
 | Mariano Encina | encinamar1an071@gmail.com | Mar1an071    |
 | Agostina Leta  | agosleta@gmail.com        | agostinaleta |
-| Jazmin Mato    | jazminmato19@gmail.com    | jazminS066   |
+| Jazmin Mato    | jazminmato19@gmail.com    | jazminS066  |
 
 **Tema elegido:** Biblioteca musical
 
