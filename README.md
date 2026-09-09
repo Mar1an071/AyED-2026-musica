@@ -6,11 +6,11 @@ Repositorio del grupo. Partir de este esqueleto. No borrar la estructura de `src
 
 | Nombre         | Mail                      | GitHub       |
 | -------------- | ------------------------- | ------------ |
-| Mariano Encina | encinamar1an071@gmail.com | Mar1an071    |
-| Agostina Leta  | agosleta@gmail.com        | agostinaleta |
-| Jazmin Mato    | jazminmato19@gmail.com    | jazminS066  |
+| Mariano Encina | encinamar1an071@gmail.com | Mar1an071    |45997358
+| Agostina Leta  | agosleta@gmail.com        | agostinaleta |40381022
+| Jazmin Mato    | jazminmato19@gmail.com    | jazminS066   |47454406
 
-**Tema elegido:** Biblioteca musical
+**Tema elegido:** Biblioteca musical   Sistema de gestión de biblioteca musical para catalogar canciones, álbumes y artistas, permitiendo búsquedas y ordenamiento
 
 ## Cómo ejecutar
 
