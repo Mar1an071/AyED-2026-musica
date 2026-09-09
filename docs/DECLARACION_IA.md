@@ -6,8 +6,8 @@ Fecha de esta versión del archivo:
 
 | Entrega | Fecha | Herramienta (ChatGPT, Cursor, Copilot, otra) | Para qué (diseño, código, debug, docs) | Qué pegaron o generaron | Qué reescribieron / revisaron a mano | Integrante |
 | --- | --- | --- | --- | --- | --- | --- |
-| E1 |09-09-26 |gemini|consigna, codigo, orientacion en la terminal |codigo | Agostina Leta  |
-  E1 | | | | | | | 
+| E1 |09-09-26 |Gemini|consigna, codigo, orientacion en la terminal | Orientacion sobre Clases | Genere consultas sobre la estructura de una clase, los métodos y atributos y genere la Clase necesaria  | Agostina Leta |
+|  E1 |09-09-26 |Opencode (Muse Spark 1.3) | codigo | consulta sobre apertura de archivos con with |  Reescribi la funcion cargar_csv en texto.py en base a la estructura que me dio el modelo | Mariano Encina | 
 | E2 |  |  |  |  |  |  |
 | E3 |  |  |  |  |  |  |
 | E4 |  |  |  |  |  |  |

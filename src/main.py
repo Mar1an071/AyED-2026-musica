@@ -20,6 +20,19 @@ def cargar_biblioteca():
 def listar_canciones(biblioteca):
     for c in biblioteca.listar_canciones():
         print(c)
+    
+def ver_detalle(biblioteca):
+    entrada = input("Ingrese el ID de la canción: ").strip()
+    if not entrada.isdigit():
+        print("ID inválido.")
+        return
+    id = int(entrada)
+    cancion = biblioteca.buscar_id(id)
+    if cancion:
+        print(cancion)
+    else:
+        print("Canción no encontrada.")
+
 
 def mostrar_menu():
     nombre = TEMAS.get(TEMA, TEMA or "(sin tema)")
@@ -52,7 +65,9 @@ def main():
             print("Chau.")
         if opcion == "1":
             listar_canciones(biblioteca)
-        elif opcion in {"2", "3", "4", "5", "6", "7", "8", "9"}:
+        if opcion == "2":
+            ver_detalle(biblioteca)
+        elif opcion in {"3", "4", "5", "6", "7", "8", "9"}:
             pendiente()
         else:
             print("Opción inválida.")

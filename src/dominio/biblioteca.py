@@ -7,3 +7,9 @@ class Biblioteca:
 
     def listar_canciones(self):
         return self.canciones
+    
+    def buscar_id(self, id):
+        for c in self.canciones:
+            if c.id == id:
+                return c
+        return None
