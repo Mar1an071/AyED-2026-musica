@@ -14,3 +14,4 @@ Fecha de esta versión del archivo:
 | E6 |  |  |  |  |  |  |
 
 Compromiso: cualquiera del grupo puede explicar cualquier archivo del tag.
+
