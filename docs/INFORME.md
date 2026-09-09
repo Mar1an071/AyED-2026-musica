@@ -5,7 +5,7 @@ Completar y hacer crecer en cada entrega. No hace falta prosa larga: oraciones c
 ## 1. Grupo y tema
 
 - Tema: Musica
-- Por qué lo eligieron (5–8 líneas): porque
+- Por qué lo eligieron (5–8 líneas): Nuestro grupo eligió el tema de canciones debido a que estas mismas en general son parte de nuestra vida cotidiana, en cualquier ámbito y momento uno escucha música ya sea acompañado o individualmente. Por otro lado, nos permite aplicar conceptos de programacion de forma practica y motivadora, uniendo nuestro interes personal con plataformas que utilizan estos datos, como por ejemplo: Spotify y YouTube Music
 
 ## 2. Modelo
 
