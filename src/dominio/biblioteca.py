@@ -1,3 +1,5 @@
+from src.excepciones import ItemNoEncontradoError
+
 class Biblioteca:
     def __init__(self):
         self.canciones = []
@@ -12,4 +14,4 @@ class Biblioteca:
         for c in self.canciones:
             if c.id == id:
                 return c
-        return None
+        raise ItemNoEncontradoError("Cancion no encontrada")

@@ -1,6 +1,7 @@
 from src.config import TEMA
 from src.dominio.biblioteca import Biblioteca
 from src.persistencia.texto import cargar_csv
+from src.excepciones import ItemNoEncontradoError
 
 TEMAS = {
     "pokedex": "Pokédex",
@@ -23,15 +24,19 @@ def listar_canciones(biblioteca):
     
 def ver_detalle(biblioteca):
     entrada = input("Ingrese el ID de la canción: ").strip()
-    if not entrada.isdigit():
-        print("ID inválido.")
+    try:
+        id_cancion = int(entrada)
+    except ValueError:
+        print("id invalido")
         return
-    id = int(entrada)
-    cancion = biblioteca.buscar_id(id)
-    if cancion:
+    try:
+        cancion = biblioteca.buscar_id(id_cancion)
         print(cancion)
-    else:
-        print("Canción no encontrada.")
+    except ItemNoEncontradoError:
+        print("Cancion no encontrada")
+
+
+
 
 
 def mostrar_menu():
@@ -63,9 +68,9 @@ def main():
         opcion = input("> ").strip()
         if opcion == "0":
             print("Chau.")
-        if opcion == "1":
+        elif opcion == "1":
             listar_canciones(biblioteca)
-        if opcion == "2":
+        elif opcion == "2":
             ver_detalle(biblioteca)
         elif opcion in {"3", "4", "5", "6", "7", "8", "9"}:
             pendiente()
