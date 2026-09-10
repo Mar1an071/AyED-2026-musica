@@ -8,6 +8,7 @@ Fecha de esta versión del archivo: 9/9/26
 | --- | --- | --- | --- | --- | --- | --- |
 | E1 |09-09-26 |Gemini|consigna, codigo, orientacion en la terminal | Orientacion sobre Clases | Genere consultas sobre la estructura de una clase, los métodos y atributos y genere la Clase necesaria  | Agostina Leta |
 |  E1 |09-09-26 |Opencode (Muse Spark 1.3) | codigo | consulta sobre apertura de archivos con with |  Reescribi la funcion cargar_csv en texto.py en base a la estructura que me dio el modelo | Mariano Encina | 
+| E1 |09-09-26 |Gemini|codigo, como usar github y orientacion en la terminal | Clases | Genere la clase | Jazmin Mato |
 | E2 |  |  |  |  |  |  |
 | E3 |  |  |  |  |  |  |
 | E4 |  |  |  |  |  |  |
