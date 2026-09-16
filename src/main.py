@@ -2,6 +2,8 @@ from src.config import TEMA
 from src.dominio.biblioteca import Biblioteca
 from src.persistencia.texto import cargar_csv
 from src.excepciones import ItemNoEncontradoError
+from src.dominio.recursion import cadena_por_genero, mostrar_cadena_por_genero
+
 
 TEMAS = {
     "pokedex": "Pokédex",
@@ -34,7 +36,6 @@ def ver_detalle(biblioteca):
         print(cancion)
     except ItemNoEncontradoError:
         print("Cancion no encontrada")
-
 
 
 
@@ -72,7 +73,10 @@ def main():
             listar_canciones(biblioteca)
         elif opcion == "2":
             ver_detalle(biblioteca)
-        elif opcion in {"3", "4", "5", "6", "7", "8", "9"}:
+        elif opcion == "5":
+            operacion_recursiva(biblioteca)
+
+        elif opcion in {"3", "4", "6", "7", "8", "9"}:
             pendiente()
         else:
             print("Opción inválida.")

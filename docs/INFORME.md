@@ -32,10 +32,23 @@ Qué es un ítem del catálogo. Qué es mutable y qué no (E1). Cómo se relacio
 
 ## 3. Recursión (E2)
 
-- Función:
-- Caso base:
-- Caso recursivo:
-- Traza de un ejemplo real del dataset:
+- Función: recolectar_por_genero(canciones,genero, indice, resultado): tiene como objetivo recorrer una lista de objetos de la clase Cancion() y agregar a la lista "resultado" todas las que coincidan con el género, empezando por un indice indicado y yendo solo hacia adelante.
+
+- Caso base: if indice >= len(canciones):
+    return resultado
+
+Ocurre cuando el indice es igual o mayor a los elementos de la lista de canciones (67 elementos). Al cumplirse la condicion significa que ya reviso toda la lista, por lo que la funcion detiene la recursividad y devuelve la lista resultado (con todas las canciones del mismo genero).
+
+- Caso recursivo: 
+cancion = canciones[indice]
+if cancion.genero == genero:
+    resultado.append(cancion)
+return recolectar_por_genero(canciones, genero, indice + 1, resultado)
+
+Ocurre mientras el índice es menor a la cantidad de canciones (67). Mientras se cumpla esta condicion se extrae el objeto Cancion() en la posición actual (canciones[indice]). Luego compara su atributo genero con el que se esta buscando y si coincide guarda el objeto en la lista llamada "resultado". Luego, se llama a sí misma con indice+1 para seguir revisando la siguiente cancion, hasta llegar al caso base.
+
+- Traza de un ejemplo real del dataset: 
+
 
 ## 4. TADs (E3)
 
