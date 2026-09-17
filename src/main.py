@@ -37,8 +37,18 @@ def ver_detalle(biblioteca):
     except ItemNoEncontradoError:
         print("Cancion no encontrada")
 
-
-
+def operacion_recursiva(biblioteca):
+        entrada = input("Ingrese el ID de la canción: ").strip()
+        try:
+            id_cancion = int(entrada)
+        except ValueError:
+            print("id invalido")
+            return
+        try:
+            cadena = cadena_por_genero(biblioteca, id_cancion)
+            mostrar_cadena_por_genero(cadena)
+        except ItemNoEncontradoError:
+            print("Cancion no encontrada")
 
 def mostrar_menu():
     nombre = TEMAS.get(TEMA, TEMA or "(sin tema)")
