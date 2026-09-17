@@ -10,8 +10,8 @@ Mínimos: 8 casos escritos en E2; ejecutados en E3; 15 de regresión en E6 (pila
 | --- | --- | --- | --- | --- | --- | --- |
 | P01 | E1 | Arrancar el programa y listar catálogo | dataset de la cátedra | lista no vacía, sin traceback | pasa ✅  | Se importaron las clases bibliotecas y cancion de /dominio y la funcion cargar_csv de /persistencia al main. En el main se crearon funciones las cuales cargan el csv y listan las canciones |
 | P02 | E1 | Elegir un ítem inexistente | id = -1 | mensaje claro, el menú sigue | pasa ✅ | Se creo la funcion ver_detalle() la cual busca el id ingresado por el usuario y si lo encuentra imprime el detalle de la cancion |
-| P03 | E2 | Operación recursiva sobre un ítem con cadena | ver consigna §3.3 | imprime la cadena completa |  |   |
-| P04 | E2 | Operación recursiva sobre un ítem sin derivados |  | solo el ítem (caso base) |  |  |
+| P03 | E2 | En el menú elegir 5 (Operación recursiva) e ingresar 1 | id = 1 (Persiana - Rock, que tiene cadena de 40 del mismo género) | Imprime Cadena del género 'Rock' (40 canciones): y lista las 40 (1, 2, 3, 4, 5, 6... hasta el final), sin traceback, vuelve al menú. | no corrido |   |
+| P04 | E2 | En el menú elegir 5 e ingresar 67 | id = 67 (última del catálogo, género Electrónica, no tiene otra del mismo género hacia adelante) | Imprime solo ese ítem ([67] ... | Electrónica) o Cadena del género 'Electrónica' (1 canción): con 1 línea, es el caso base unitario, sin traceback, vuelve al menú | no corrido |  |
 | P05 | E3 | Agregar a la colección principal hasta el tope | equipo de 6 / equivalente | el séptimo falla con excepción propia |  |  |
 | P06 | E3 | Desapilar historial vacío | pila vacía | excepción propia, menú sigue |  |  |
 | P07 | E3 | Desencolar cola vacía | cola vacía | excepción propia, menú sigue |  |  |
