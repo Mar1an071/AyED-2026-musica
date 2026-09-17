@@ -1,6 +1,9 @@
 from src.config import TEMA
 from src.dominio.biblioteca import Biblioteca
 from src.persistencia.texto import cargar_csv
+from src.excepciones import ItemNoEncontradoError
+from src.dominio.recursion import cadena_por_genero, mostrar_cadena_por_genero
+
 
 TEMAS = {
     "pokedex": "Pokédex",
@@ -20,6 +23,32 @@ def cargar_biblioteca():
 def listar_canciones(biblioteca):
     for c in biblioteca.listar_canciones():
         print(c)
+    
+def ver_detalle(biblioteca):
+    entrada = input("Ingrese el ID de la canción: ").strip()
+    try:
+        id_cancion = int(entrada)
+    except ValueError:
+        print("id invalido")
+        return
+    try:
+        cancion = biblioteca.buscar_id(id_cancion)
+        print(cancion)
+    except ItemNoEncontradoError:
+        print("Cancion no encontrada")
+
+def operacion_recursiva(biblioteca):
+        entrada = input("Ingrese el ID de la canción: ").strip()
+        try:
+            id_cancion = int(entrada)
+        except ValueError:
+            print("id invalido")
+            return
+        try:
+            cadena = cadena_por_genero(biblioteca, id_cancion)
+            mostrar_cadena_por_genero(cadena)
+        except ItemNoEncontradoError:
+            print("Cancion no encontrada")
 
 def mostrar_menu():
     nombre = TEMAS.get(TEMA, TEMA or "(sin tema)")
@@ -50,9 +79,14 @@ def main():
         opcion = input("> ").strip()
         if opcion == "0":
             print("Chau.")
-        if opcion == "1":
+        elif opcion == "1":
             listar_canciones(biblioteca)
-        elif opcion in {"2", "3", "4", "5", "6", "7", "8", "9"}:
+        elif opcion == "2":
+            ver_detalle(biblioteca)
+        elif opcion == "5":
+            operacion_recursiva(biblioteca)
+
+        elif opcion in {"3", "4", "6", "7", "8", "9"}:
             pendiente()
         else:
             print("Opción inválida.")

@@ -11,16 +11,44 @@ Completar y hacer crecer en cada entrega. No hace falta prosa larga: oraciones c
 
 Qué es un ítem del catálogo. Qué es mutable y qué no (E1). Cómo se relacionan catálogo, colección principal, pila y cola.
 
+1 - Ítem del catálogo: es la clase Cancion dentro de la carpeta src/dominio/canciones.py 
+1.1 - Mutable o inmutable: 
+    - ID: inmutable por convencion, ya que si cambio el id de alguna cancion se romperia la busqueda de la funcion buscar_id() que esta dentro de Biblioteca.
+    - titulo, album, genero, anio, artista, duracion_seg: son mutables porque son atributos públicos reasignables.
+
+1.2 - La Biblioteca concentra todo. La coleccion principal trabaja con un subconjunto de canciones tomadas del catálogo. La pila registra el historial con criterio último en entrar primero en salir. La cola ordena los pendientes con criterio primero en entrar primero en salir.
+    
+
 ```text
-(pueden pegar un diagrama ASCII o una lista de clases)
+  Biblioteca (catálogo: todas las canciones)
+                         |
+                         v
+        Colección principal (canciones activas)
+                         |
+                +--------+--------+
+                v                 v
+        Pila (historial)   Cola (pendientes)
 ```
 
 ## 3. Recursión (E2)
 
-- Función:
-- Caso base:
-- Caso recursivo:
-- Traza de un ejemplo real del dataset:
+- Función: recolectar_por_genero(canciones,genero, indice, resultado): tiene como objetivo recorrer una lista de objetos de la clase Cancion() y agregar a la lista "resultado" todas las que coincidan con el género, empezando por un indice indicado y yendo solo hacia adelante.
+
+- Caso base: if indice >= len(canciones):
+    return resultado
+
+Ocurre cuando el indice es igual o mayor a los elementos de la lista de canciones (67 elementos). Al cumplirse la condicion significa que ya reviso toda la lista, por lo que la funcion detiene la recursividad y devuelve la lista resultado (con todas las canciones del mismo genero).
+
+- Caso recursivo: 
+cancion = canciones[indice]
+if cancion.genero == genero:
+    resultado.append(cancion)
+return recolectar_por_genero(canciones, genero, indice + 1, resultado)
+
+Ocurre mientras el índice es menor a la cantidad de canciones (67). Mientras se cumpla esta condicion se extrae el objeto Cancion() en la posición actual (canciones[indice]). Luego compara su atributo genero con el que se esta buscando y si coincide guarda el objeto en la lista llamada "resultado". Luego, se llama a sí misma con indice+1 para seguir revisando la siguiente cancion, hasta llegar al caso base.
+
+- Traza de un ejemplo real del dataset: 
+
 
 ## 4. TADs (E3)
 

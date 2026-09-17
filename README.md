@@ -4,8 +4,8 @@ Repositorio del grupo. Partir de este esqueleto. No borrar la estructura de `src
 
 ## Integrantes
 
-| Nombre         | Mail                      | GitHub       |
-| -------------- | ------------------------- | ------------ |
+| Nombre         | Mail                      | GitHub       | DNI    
+| -------------- | ------------------------- | ------------ |--------
 | Mariano Encina | encinamar1an071@gmail.com | Mar1an071    |45997358
 | Agostina Leta  | agosleta@gmail.com        | agostinaleta |40381022
 | Jazmin Mato    | jazminmato19@gmail.com    | jazminS066   |47454406
