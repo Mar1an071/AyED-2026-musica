@@ -8,10 +8,10 @@ Mínimos: 8 casos escritos en E2; ejecutados en E3; 15 de regresión en E6 (pila
 
 | ID | Entrega | Acción (pasos en el CLI) | Datos | Resultado esperado | Resultado | Notas |
 | --- | --- | --- | --- | --- | --- | --- |
-| P01 | E1 | Arrancar el programa y listar catálogo | dataset de la cátedra | lista no vacía, sin traceback |  |  |
-| P02 | E1 | Elegir un ítem inexistente | id = -1 | mensaje claro, el menú sigue |  |  |
-| P03 | E2 | Operación recursiva sobre un ítem con cadena | ver consigna §3.3 | imprime la cadena completa |  |  |
-| P04 | E2 | Operación recursiva sobre un ítem sin derivados |  | solo el ítem (caso base) |  |  |
+| P01 | E1 | Arrancar el programa y listar catálogo | dataset de la cátedra | lista no vacía, sin traceback | NO CORRIDO |  |
+| P02 | E1 | Elegir un ítem inexistente | id = -1 | mensaje claro, el menú sigue | NO CORRIDO |  |
+| P03 | E2 | Operación recursiva sobre un ítem con cadena | ver consigna §3.3 | imprime la cadena completa | NO CORRIDO |  |
+| P04 | E2 | Operación recursiva sobre un ítem sin derivados |  | solo el ítem (caso base) | NO CORRIDO |  |
 | P05 | E3 | Agregar a la colección principal hasta el tope | equipo de 6 / equivalente | el séptimo falla con excepción propia |  |  |
 | P06 | E3 | Desapilar historial vacío | pila vacía | excepción propia, menú sigue |  |  |
 | P07 | E3 | Desencolar cola vacía | cola vacía | excepción propia, menú sigue |  |  |
@@ -23,3 +23,7 @@ Mínimos: 8 casos escritos en E2; ejecutados en E3; 15 de regresión en E6 (pila
 | P13 | E5 | Guardar CSV, salir, volver a entrar |  | los datos siguen |  |  |
 | P14 | E5 | Guardar binario y modificar un registro por id |  | al recargar, ese campo cambió |  |  |
 | P15 | E5 | Abrir un binario truncado o con magia mala | archivo basura | excepción de archivo inválido |  |  |
+| P16 | E2 | Opción 5 con una canción que tiene versiones | id=1 "De Musica Ligera" | imprime la original y la Unplugged | no corrido |  |
+| P17 | E2 | Opción 5 con una canción sin versiones | id=35 "Come Together" | imprime solo esa canción (caso base) | no corrido |  |
+| P18 | E2 | Opción 5 con un id que no existe | id=999 | mensaje claro, el menú sigue, sin traceback | no corrido |  |
+| P19 | E2 | Opción 5 dos veces seguidas con la misma canción | id=1, después id=1 | no repite canciones ni se cuelga | no corrido |  |
