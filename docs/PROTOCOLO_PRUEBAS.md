@@ -8,10 +8,6 @@ Mínimos: 8 casos escritos en E2; ejecutados en E3; 15 de regresión en E6 (pila
 
 | ID | Entrega | Acción (pasos en el CLI) | Datos | Resultado esperado | Resultado | Notas |
 | --- | --- | --- | --- | --- | --- | --- |
-| P01 | E1 | Arrancar el programa y listar catálogo | dataset de la cátedra | lista no vacía, sin traceback | NO CORRIDO |  |
-| P02 | E1 | Elegir un ítem inexistente | id = -1 | mensaje claro, el menú sigue | NO CORRIDO |  |
-| P03 | E2 | Operación recursiva sobre un ítem con cadena | ver consigna §3.3 | imprime la cadena completa | NO CORRIDO |  |
-| P04 | E2 | Operación recursiva sobre un ítem sin derivados |  | solo el ítem (caso base) | NO CORRIDO |  |
 | P01 | E1 | Arrancar el programa y listar catálogo | dataset de la cátedra | lista no vacía, sin traceback | pasa ✅  | Se importaron las clases bibliotecas y cancion de /dominio y la funcion cargar_csv de /persistencia al main. En el main se crearon funciones las cuales cargan el csv y listan las canciones |
 | P02 | E1 | Elegir un ítem inexistente | id = -1 | mensaje claro, el menú sigue | pasa ✅ | Se creo la funcion ver_detalle() la cual busca el id ingresado por el usuario y si lo encuentra imprime el detalle de la cancion |
 | P03 | E2 | Operación recursiva sobre un ítem con cadena | ver consigna §3.3 | imprime la cadena completa |  |   |
