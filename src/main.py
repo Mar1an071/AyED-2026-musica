@@ -2,7 +2,7 @@ from src.config import TEMA
 from src.dominio.biblioteca import Biblioteca
 from src.persistencia.texto import cargar_csv
 from src.excepciones import ItemNoEncontradoError
-from src.dominio.recursion import cadena_por_genero, mostrar_cadena_por_genero
+from src.dominio.recursion import cadena_versiones, mostrar_cadena_recursivo
 
 
 TEMAS = {
@@ -38,17 +38,23 @@ def ver_detalle(biblioteca):
         print("Cancion no encontrada")
 
 def operacion_recursiva(biblioteca):
-        entrada = input("Ingrese el ID de la canción: ").strip()
+        entrada = input("Ingrese el ID de la canción para ver sus canciones derivadas: ").strip()
         try:
             id_cancion = int(entrada)
         except ValueError:
             print("id invalido")
             return
         try:
-            cadena = cadena_por_genero(biblioteca, id_cancion)
-            mostrar_cadena_por_genero(cadena)
+            cadena = cadena_versiones(biblioteca, id_cancion)
+            if not cadena:
+                    print("No se encontraron canciones derivadas.")
+                    return
+            base = cadena[0].titulo.split("(")[0].strip()
+            print(f"Versiones de '{base}': ({len(cadena)} canciones): ")
+            mostrar_cadena_recursivo(cadena)
         except ItemNoEncontradoError:
             print("Cancion no encontrada")
+        
 
 def mostrar_menu():
     nombre = TEMAS.get(TEMA, TEMA or "(sin tema)")
