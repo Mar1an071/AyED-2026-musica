@@ -11,7 +11,7 @@ Fecha de esta versión del archivo: 9/9/26
   | E1 |09-09-26 |Gemini|codigo, como usar github y orientacion en la terminal | Clases | Genere la clase | Jazmin Mato |
   | E2 | 15-09-26 | Gemini/Opencode(Deepseek v4) | Consulta sobre opciones de funciones recursivas / Como implementarla  | No pegue nada simplemente le pedi ayuda sobre como debia estar estructurada la funcion  | A Opencode le consulté como debía estar estructurada el archivo recursion.py y luego de hacerla le pedí que creara un archivo para testear si funcionaba la recursión (lo probe localmente y no forma parte de los archivos entregados)   | Mariano Encina  |
   | E2 | 15-09-26 | Gemini | Como hacer una funcion recusiva  | Codigo  | Posterior a hacer varias consultas a Gemini, implemente un codigo el cual fue consultado con mis compañeros y corregido en conjunto. | Jazmin Mato  |
-  | E2 | 17-09-2026 | open code | docs | filas P16–P19 del protocolo de pruebas (casos de recursión) | resultado | Agostina Leta |
+  | E2 | 17-09-2026 | opencode | docs | filas P16–P19 del protocolo de pruebas (casos de recursión) | nada | Agostina Leta |
 | E3 |  |  |  |  |  |  |
 | E4 |  |  |  |  |  |  |
 | E5 |  |  |  |  |  |  |
