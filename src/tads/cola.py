@@ -1,3 +1,6 @@
+from src.tads.lista_enlazada import ListaEnlazada
+from src.excepciones import ColaVaciaError
+
 class Cola:
     """Cola implementada sobre ListaEnlazada (FIFO)."""
 
