@@ -1,13 +1,11 @@
 from src.config import TEMA
 from src.dominio.biblioteca import Biblioteca
-from src.dominio.historial import Historial
 from src.persistencia.texto import cargar_csv
-from src.excepciones import ItemNoEncontradoError
+from src.excepciones import ItemNoEncontradoError, ColeccionLlenaError, ColeccionVaciaError, PilaVaciaError, ColaVaciaError, ArchivoInvalidoError
 from src.dominio.recursion import cadena_versiones, mostrar_cadena_recursivo
 from src.dominio.playlist import Playlist
 from src.tads.pila import Pila
 from src.tads.cola import Cola
-from src.excepciones import ColeccionLlenaError, ColeccionVaciaError, PilaVaciaError, ColaVaciaError, ArchivoInvalidoError
 
 
 TEMAS = {
@@ -85,7 +83,6 @@ def mostrar_menu():
     print("0. Salir")
 
 def opcion_playlist(biblioteca, playlist):
-    playlist = Playlist()
     while True:
         print()
         print("--- 6. Colección principal: Playlist ---")
@@ -128,8 +125,6 @@ def opcion_playlist(biblioteca, playlist):
             print("Opción inválida.")
 
 def opcion_historial(biblioteca, historial):
-    pila = Pila()
-    historial = Historial()
     while True:
         print()
         print("--- 7. Historial (pila / deshacer) ---")
@@ -151,8 +146,8 @@ def opcion_historial(biblioteca, historial):
                 cancion = biblioteca.buscar_id(id_cancion)
                 historial.registrar_cancion(cancion)
                 print(f"Registrada: {cancion.titulo}")
-            except ArchivoInvalidoError as e:
-                print(f"Archivo inválido: {e}")
+            except ItemNoEncontradoError as e:
+                print(f"No se encontro el elemento: {e}")
         elif opcion == "2":
             try:
                 cancion = historial.deshacer_cancion()
@@ -171,7 +166,6 @@ def opcion_historial(biblioteca, historial):
             print("Opción inválida.")
 
 def opcion_cola(biblioteca, cola):
-    cola = Cola()
     while True:
         print()
         print("--- 8. Cola de reproducción ---")
@@ -218,9 +212,9 @@ def main():
         print("Seteá TEMA en src/config.py: 'pokedex', 'recetario' o 'musica'.")
         return
     biblioteca = cargar_biblioteca()
+    playlist = opcion_playlist()
     historial = opcion_historial()
     cola = opcion_cola()
-    playlist = opcion_playlist()
     opcion = None
     while opcion != "0":
         mostrar_menu()
@@ -234,11 +228,11 @@ def main():
         elif opcion == "5":
             operacion_recursiva(biblioteca)
         elif opcion == "6":
-            opcion_playlist(biblioteca, playlist)
+            opcion_playlist(biblioteca, Playlist)
         elif opcion == "7":
-            opcion_historial(biblioteca, historial)
+            opcion_historial(biblioteca, Pila)
         elif opcion == "8":
-            opcion_cola(biblioteca, cola)
+            opcion_cola(biblioteca, Cola)
         elif opcion in {"3", "4", "9"}:
             pendiente()
         else:
