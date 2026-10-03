@@ -12,6 +12,8 @@ Fecha de esta versión del archivo: 9/9/26
   | E2 | 15-09-26 | Gemini/Opencode(Deepseek v4) | Consulta sobre opciones de funciones recursivas / Como implementarla  | No pegue nada simplemente le pedi ayuda sobre como debia estar estructurada la funcion  | A Opencode le consulté como debía estar estructurada el archivo recursion.py y luego de hacerla le pedí que creara un archivo para testear si funcionaba la recursión (lo probe localmente y no forma parte de los archivos entregados)   | Mariano Encina  |
   | E2 | 15-09-26 | Gemini | Como hacer una funcion recusiva  | Codigo  | Posterior a hacer varias consultas a Gemini, implemente un codigo el cual fue consultado con mis compañeros y corregido en conjunto. | Jazmin Mato  |
   | E2 | 17-09-2026 | opencode | docs | filas P16–P19 del protocolo de pruebas (casos de recursión) | nada | Agostina Leta |
+| E3 | 03-10-26 | OpenCode | codigo, debug | Consulta sobre como realizar las opciones 6, 7 y 8: playlist, historial y cola; lista enlanzada devolviendo True/False | Los errores que main pasaba Pila/Cola/Playlist como clases en vez de instancias, los implemente y revise a su vez. | Jazmin Mato |
+| E3 |  |  |  |  |  |  |
 | E3 |  |  |  |  |  |  |
 | E4 |  |  |  |  |  |  |
 | E5 |  |  |  |  |  |  |
