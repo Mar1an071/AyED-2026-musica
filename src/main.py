@@ -4,9 +4,9 @@ from src.persistencia.texto import cargar_csv
 from src.excepciones import ItemNoEncontradoError
 from src.dominio.recursion import cadena_versiones, mostrar_cadena_recursivo
 from src.dominio.playlist import Playlist
-from src.tads.pila import Pila
-from src.tads.cola import Cola
-from src.excepciones import ColeccionLlenaError, ColeccionVaciaError, PilaVaciaError, ColaVaciaError
+from src.dominio.historial import Historial
+from src.dominio.cola_reproduccion import ColaReproduccion
+from src.excepciones import ColeccionLlenaError, PilaVaciaError, ColaVaciaError
 
 TEMAS = {
     "pokedex": "Pokédex",
@@ -58,18 +58,22 @@ def operacion_recursiva(biblioteca):
     except ItemNoEncontradoError:
         print("Cancion no encontrada")
 
-def opcion_playlist(biblioteca, playlist): 
+def opcion_playlist(biblioteca, playlist):
     while True:
         print()
-        print(f"=== Playlist: {playlist.nombre} ===")
+        print("=== 6. Playlist (colección principal) ===")
         print("1. Listar canciones")
         print("2. Agregar canción")
         print("3. Quitar canción")
         print("4. Volver al menú principal")
         opcion = input("> ").strip()
         if opcion == "1":
-            for c in playlist.listar_canciones():
-                print(c)
+            canciones = playlist.listar()
+            if len(canciones) == 0:
+                print("La playlist está vacía.")
+            else:
+                for c in canciones:
+                    print(c)
         elif opcion == "2":
             entrada = input("Ingrese el ID de la canción a agregar: ").strip()
             try:
@@ -83,8 +87,8 @@ def opcion_playlist(biblioteca, playlist):
                 print(f"Canción '{cancion.titulo}' agregada a la playlist.")
             except ItemNoEncontradoError:
                 print("Canción no encontrada.")
-            except ColeccionLlenaError:
-                print("La playlist está llena. No se puede agregar más canciones.")
+            except ColeccionLlenaError as e:
+                print(f"La playlist está llena. {e}")
         elif opcion == "3":
             entrada = input("Ingrese el ID de la canción a quitar: ").strip()
             try:
@@ -94,12 +98,10 @@ def opcion_playlist(biblioteca, playlist):
                 continue
             try:
                 cancion = biblioteca.buscar_id(id_cancion)
-                playlist.quitar_cancion(cancion)
+                playlist.eliminar(cancion)
                 print(f"Canción '{cancion.titulo}' eliminada de la playlist.")
             except ItemNoEncontradoError:
-                print("Canción no encontrada en la playlist.")
-            except ColeccionVaciaError:
-                print("La playlist está vacía. No hay canciones para quitar.")
+                print("Canción no encontrada.")
         elif opcion == "4":
             break
         else:
@@ -108,20 +110,13 @@ def opcion_playlist(biblioteca, playlist):
 def opcion_historial(biblioteca, historial):
     while True:
         print()
-        print("=== Historial (Pila) ===")
-        print("1. Listar canciones en el historial")
-        print("2. Agregar canción al historial")
-        print("3. Quitar canción del historial")
-        print("4. Volver al menú principal")
+        print("=== 7. Historial (pila) ===")
+        print("1. Registrar canción")
+        print("2. Deshacer (sacar la última)")
+        print("3. Volver al menú principal")
         opcion = input("> ").strip()
         if opcion == "1":
-            try:
-                for c in historial.listar_canciones():
-                    print(c)
-            except PilaVaciaError:
-                print("El Historial está vacío.")
-        elif opcion == "2":
-            entrada = input("ID de la canción a agregar al historial: ").strip()
+            entrada = input("ID de la canción a registrar: ").strip()
             try:
                 id_cancion = int(entrada)
             except ValueError:
@@ -129,19 +124,17 @@ def opcion_historial(biblioteca, historial):
                 continue
             try:
                 cancion = biblioteca.buscar_id(id_cancion)
-                historial.agregar_cancion(cancion)
-                print(f"Canción '{cancion.titulo}' agregada al historial.")
+                historial.registrar_cancion(cancion)
+                print(f"Canción '{cancion.titulo}' registrada en el historial.")
             except ItemNoEncontradoError:
                 print("Canción no encontrada.")
-            except ColeccionLlenaError:
-                print("El Historial está lleno, no se puede agregar más canciones.")
-        elif opcion == "3":
+        elif opcion == "2":
             try:
-                cancion = historial.quitar_cancion()
-                print(f"Canción '{cancion.titulo}' eliminada del historial.")
-            except PilaVaciaError:
-                print("El Historial está vacío. No hay canciones para quitar.")
-        elif opcion == "4":
+                cancion = historial.deshacer_cancion()
+                print(f"Deshecho: '{cancion.titulo}' salió del historial.")
+            except PilaVaciaError as e:
+                print(f"No se puede deshacer: {e}")
+        elif opcion == "3":
             break
         else:
             print("Opción inválida.")
@@ -149,20 +142,13 @@ def opcion_historial(biblioteca, historial):
 def opcion_cola(biblioteca, cola):
     while True:
         print()
-        print("=== Cola ===")
-        print("1. Listar canciones en la cola")
-        print("2. Agregar canción a la cola")
-        print("3. Quitar canción de la cola")
-        print("4. Volver al menú principal")
+        print("=== 8. Cola de reproducción ===")
+        print("1. Encolar canción")
+        print("2. Reproducir siguiente")
+        print("3. Volver al menú principal")
         opcion = input("> ").strip()
         if opcion == "1":
-            try:
-                for c in cola.listar_canciones():
-                    print(c)
-            except ColaVaciaError:
-                print("La Cola está vacía.")
-        elif opcion == "2":
-            entrada = input("ID de la canción a agregar a la cola: ").strip()
+            entrada = input("ID de la canción a encolar: ").strip()
             try:
                 id_cancion = int(entrada)
             except ValueError:
@@ -170,19 +156,17 @@ def opcion_cola(biblioteca, cola):
                 continue
             try:
                 cancion = biblioteca.buscar_id(id_cancion)
-                cola.agregar_cancion(cancion)
-                print(f"Canción '{cancion.titulo}' agregada a la cola.")
+                cola.encolar_cancion(cancion)
+                print(f"Canción '{cancion.titulo}' encolada.")
             except ItemNoEncontradoError:
                 print("Canción no encontrada.")
-            except ColeccionLlenaError:
-                print("La Cola está llena, no se puede agregar más canciones.")
-        elif opcion == "3":
+        elif opcion == "2":
             try:
-                cancion = cola.quitar_cancion()
-                print(f"Canción '{cancion.titulo}' eliminada de la cola.")
-            except ColaVaciaError:
-                print("La Cola está vacía. No hay canciones para quitar.")
-        elif opcion == "4":
+                cancion = cola.reproducir_siguiente()
+                print(f"Reproduciendo: {cancion}")
+            except ColaVaciaError as e:
+                print(f"No se puede reproducir: {e}")
+        elif opcion == "3":
             break
         else:
             print("Opción inválida.")
@@ -209,6 +193,9 @@ def main():
         print("Seteá TEMA en src/config.py: 'pokedex', 'recetario' o 'musica'.")
         return
     biblioteca = cargar_biblioteca()
+    playlist = Playlist(tope=6)
+    historial = Historial()
+    cola = ColaReproduccion()
     opcion = None
     while opcion != "0":
         mostrar_menu()
@@ -222,13 +209,11 @@ def main():
         elif opcion == "5":
             operacion_recursiva(biblioteca)
         elif opcion == "6":
-            opcion_playlist(biblioteca, Playlist)
+            opcion_playlist(biblioteca, playlist)
         elif opcion == "7":
-            opcion_historial(biblioteca, Pila)
+            opcion_historial(biblioteca, historial)
         elif opcion == "8":
-            opcion_cola(biblioteca, Cola)
-
-        
+            opcion_cola(biblioteca, cola)
         elif opcion in {"3", "4", "9"}:
             pendiente()
         else:
