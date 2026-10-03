@@ -59,6 +59,14 @@ def operacion_recursiva(biblioteca):
         except ItemNoEncontradoError:
             print("Cancion no encontrada")
 
+def pedir_id(mensaje):
+    entrada = input(mensaje).strip()
+    try:
+        return int(entrada)
+    except ValueError:
+        print("id invalido")
+        return None
+
 
 def mostrar_menu():
     nombre = TEMAS.get(TEMA, TEMA or "(sin tema)")
@@ -78,129 +86,124 @@ def mostrar_menu():
 def opcion_playlist(biblioteca, playlist):
     while True:
         print()
-        print(f"=== Playlist: {playlist.nombre} ===")
-        print("1. Listar canciones")
-        print("2. Agregar canción")
-        print("3. Quitar canción")
-        print("4. Volver al menú principal")
+        print("--- 6. Colección principal: Playlist ---")
+        print(f"1. Agregar canción   (tope {playlist.tamanio()}/{6})")
+        print("2. Eliminar canción")
+        print("3. Listar playlist")
+        print("0. Volver")
         opcion = input("> ").strip()
-        if opcion == "1":
-            for c in playlist.listar_canciones():
-                print(c)
+        if opcion == "0":
+            return
+        elif opcion == "1":
+            id_cancion = pedir_id("Ingrese el ID de la canción: ")
+            if id_cancion is None:
+                continue
+            try:
+                cancion = biblioteca.buscar_id(id_cancion)
+                playlist.agregar(cancion)
+                print(f"Agregado: {cancion.titulo}")
+            except ArchivoInvalidoError as e:
+                print(f"Archivo inválido: {e}")
+            except ColeccionLlenaError as e:
+                print(f"La playlist esta llena: {e}")
         elif opcion == "2":
-            entrada = input("Ingrese el ID de la canción a agregar: ").strip()
-            try:
-                id_cancion = int(entrada)
-            except ValueError:
-                print("id invalido")
+            id_cancion = pedir_id("Ingrese el ID de la canción a quitar: ")
+            if id_cancion is None:
                 continue
             try:
                 cancion = biblioteca.buscar_id(id_cancion)
-                playlist.agregar_cancion(cancion)
-                print(f"Canción '{cancion.titulo}' agregada a la playlist.")
-            except ItemNoEncontradoError:
-                print("Canción no encontrada.")
-            except ColeccionLlenaError:
-                print("La playlist está llena. No se puede agregar más canciones.")
+                playlist.eliminar(cancion)
+                print(f"Quitada: {cancion.titulo}")
+            except ColeccionVaciaError as e:
+                print(f"La playlist está vacía: {e}")
         elif opcion == "3":
-            entrada = input("Ingrese el ID de la canción a quitar: ").strip()
-            try:
-                id_cancion = int(entrada)
-            except ValueError:
-                print("id invalido")
+            if playlist.esta_vacia():
+                print("La playlist está vacía.")
                 continue
-            try:
-                cancion = biblioteca.buscar_id(id_cancion)
-                playlist.quitar_cancion(cancion)
-                print(f"Canción '{cancion.titulo}' eliminada de la playlist.")
-            except ItemNoEncontradoError:
-                print("Canción no encontrada en la playlist.")
-            except ColeccionVaciaError:
-                print("La playlist está vacía. No hay canciones para quitar.")
-        elif opcion == "4":
-            break
+            for i, cancion in enumerate(playlist.listar(), start=1):
+                print(f"  {i}. {cancion}")
         else:
             print("Opción inválida.")
 
 def opcion_historial(biblioteca, historial):
     while True:
         print()
-        print("=== Historial (Pila) ===")
-        print("1. Listar canciones en el historial")
-        print("2. Agregar canción al historial")
-        print("3. Quitar canción del historial")
-        print("4. Volver al menú principal")
+        print("--- 7. Historial (pila / deshacer) ---")
+        print("1. Registrar canción (reproducir)")
+        print("2. Deshacer última")
+        print("3. Ver la última sin sacarla")
+        print("4. Ver cuántas hay en el historial")
+        print("0. Volver")
+
         opcion = input("> ").strip()
-        if opcion == "1":
-            try:
-                for c in historial.listar_canciones():
-                    print(c)
-            except PilaVaciaError:
-                print("El Historial está vacío.")
-        elif opcion == "2":
-            entrada = input("ID de la canción a agregar al historial: ").strip()
-            try:
-                id_cancion = int(entrada)
-            except ValueError:
-                print("id invalido")
+
+        if opcion == "0":
+            return
+        elif opcion == "1":
+            id_cancion = pedir_id("Ingrese el ID de la canción a registrar: ")
+            if id_cancion is None:
                 continue
             try:
                 cancion = biblioteca.buscar_id(id_cancion)
-                historial.agregar_cancion(cancion)
-                print(f"Canción '{cancion.titulo}' agregada al historial.")
-            except ItemNoEncontradoError:
-                print("Canción no encontrada.")
-            except ColeccionLlenaError:
-                print("El Historial está lleno, no se puede agregar más canciones.")
+                historial.registrar_cancion(cancion)
+                print(f"Registrada: {cancion.titulo}")
+            except ItemNoEncontradoError as e:
+                print(f"No se encontro ese elemento: {e}")
+        elif opcion == "2":
+            try:
+                cancion = historial.deshacer_cancion()
+                print(f"Deshecho: {cancion}")
+            except PilaVaciaError as e:
+                print(f"No se puede deshacer: {e}")
         elif opcion == "3":
             try:
-                cancion = historial.quitar_cancion()
-                print(f"Canción '{cancion.titulo}' eliminada del historial.")
-            except PilaVaciaError:
-                print("El Historial está vacío. No hay canciones para quitar.")
+                cancion = historial.ver_ultima()
+                print(f"Ultima del historial: {cancion}")
+            except PilaVaciaError as e:
+                print(f"No se puede deshacer: {e}")
         elif opcion == "4":
-            break
+            print(f"Canciones en el historial: {historial.listar()}")
         else:
             print("Opción inválida.")
 
 def opcion_cola(biblioteca, cola):
     while True:
         print()
-        print("=== Cola ===")
-        print("1. Listar canciones en la cola")
-        print("2. Agregar canción a la cola")
-        print("3. Quitar canción de la cola")
-        print("4. Volver al menú principal")
+        print("--- 8. Cola de reproducción ---")
+        print("1. Encolar canción")
+        print("2. Reproducir siguiente")
+        print("3. Ver la siguiente sin sacarla")
+        print("4. Ver cuántas hay en cola")
+        print("0. Volver")
+
         opcion = input("> ").strip()
-        if opcion == "1":
-            try:
-                for c in cola.listar_canciones():
-                    print(c)
-            except ColaVaciaError:
-                print("La Cola está vacía.")
-        elif opcion == "2":
-            entrada = input("ID de la canción a agregar a la cola: ").strip()
-            try:
-                id_cancion = int(entrada)
-            except ValueError:
-                print("id invalido")
+
+        if opcion == "0":
+            return
+        elif opcion == "1":
+            id_cancion = pedir_id("Ingrese el ID de la canción a encolar: ")
+            if id_cancion is None:
                 continue
             try:
                 cancion = biblioteca.buscar_id(id_cancion)
-                cola.agregar_cancion(cancion)
-                print(f"Canción '{cancion.titulo}' agregada a la cola.")
-            except ItemNoEncontradoError:
-                print("Canción no encontrada.")
-            except ColeccionLlenaError:
-                print("La Cola está llena, no se puede agregar más canciones.")
+                cola.encolar_cancion(cancion)
+                print(f"Encolada: {cancion.titulo}")
+            except ItemNoEncontradoError as e:
+                print(f"No se encontro ese elemento: {e}")
+        elif opcion == "2":
+            try:
+                cancion = cola.reproducir_siguiente()
+                print(f"Reproduciendo: {cancion}")
+            except ColaVaciaError as e:
+                print(f"No se puede reproducir: {e}")
         elif opcion == "3":
             try:
-                cancion = cola.quitar_cancion()
-                print(f"Canción '{cancion.titulo}' eliminada de la cola.")
-            except ColaVaciaError:
-                print("La Cola está vacía. No hay canciones para quitar.")
+                cancion = cola.ver_siguiente()
+                print(f"La siguiente es: {cancion}")
+            except ColaVaciaError as e:
+                print(f"No se puede reproducir: {e}")
         elif opcion == "4":
-            break
+            print(f"Canciones en cola: {cola.listar()}")
         else:
             print("Opción inválida.")
 
