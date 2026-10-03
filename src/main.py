@@ -209,9 +209,6 @@ def main():
         print("Seteá TEMA en src/config.py: 'pokedex', 'recetario' o 'musica'.")
         return
     biblioteca = cargar_biblioteca()
-    playlist = opcion_playlist()
-    historial = opcion_historial()
-    cola = opcion_cola()
     opcion = None
     while opcion != "0":
         mostrar_menu()
@@ -230,6 +227,8 @@ def main():
             opcion_historial(biblioteca, Pila)
         elif opcion == "8":
             opcion_cola(biblioteca, Cola)
+
+        
         elif opcion in {"3", "4", "9"}:
             pendiente()
         else:
