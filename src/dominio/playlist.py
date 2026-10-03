@@ -1,5 +1,5 @@
 from src.tads.lista_enlazada import ListaEnlazada
-from src.excepciones import ColeccionLlenaError
+from src.excepciones import ColeccionLlenaError, ItemNoEncontradoError
 
 class Playlist:
     def __init__(self, tope=6):
@@ -12,9 +12,13 @@ class Playlist:
         self._canciones.insertar_al_final(cancion)
     
     def eliminar(self, cancion):
-        self._canciones.eliminar(cancion)
+        if not self._canciones.eliminar(cancion):
+            raise ItemNoEncontradoError("Esa canción no está en la playlist.")
 
     def listar(self):
         return self._canciones
+
+    def esta_vacia(self):
+        return self._canciones.esta_vacia()
 
     

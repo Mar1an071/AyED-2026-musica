@@ -33,19 +33,21 @@ class ListaEnlazada:
         raise NotImplementedError
 
     def eliminar(self, dato):
+        """Saca el primer nodo con ese dato. Devuelve True si lo removió."""
         if self.esta_vacia():
-            return
+            return False
         if self._cabeza.dato == dato:
             self._cabeza = self._cabeza.siguiente
             self._tamanio -= 1
-            return
+            return True
         actual = self._cabeza
         while actual.siguiente is not None:
             if actual.siguiente.dato == dato:
                 actual.siguiente = actual.siguiente.siguiente
                 self._tamanio -= 1
-                return
+                return True
             actual = actual.siguiente
+        return False
 
     def buscar(self, dato):
         actual = self._cabeza

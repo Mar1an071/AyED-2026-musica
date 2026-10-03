@@ -98,48 +98,51 @@ def opcion_playlist(biblioteca, playlist):
                 continue
             try:
                 cancion = biblioteca.buscar_id(id_cancion)
+            except ItemNoEncontradoError:
+                print("Canción no encontrada en el catálogo.")
+                continue
+            try:
                 playlist.eliminar(cancion)
                 print(f"Canción '{cancion.titulo}' eliminada de la playlist.")
             except ItemNoEncontradoError:
-                print("Canción no encontrada.")
+                print("Esa canción no está en la playlist.")
         elif opcion == "4":
             break
         else:
             print("Opción inválida.")
 
-def opcion_historial(biblioteca, historial):
+def opcion_historial(historial):
     while True:
         print()
         print("=== 7. Historial (pila) ===")
-        print("1. Registrar canción")
-        print("2. Deshacer (sacar la última)")
-        print("3. Volver al menú principal")
+        print("1. Ver el historial")
+        print("2. Ver la última")
+        print("3. Deshacer (sacar la última)")
+        print("4. Volver al menú principal")
         opcion = input("> ").strip()
         if opcion == "1":
-            entrada = input("ID de la canción a registrar: ").strip()
-            try:
-                id_cancion = int(entrada)
-            except ValueError:
-                print("id invalido")
-                continue
-            try:
-                cancion = biblioteca.buscar_id(id_cancion)
-                historial.registrar_cancion(cancion)
-                print(f"Canción '{cancion.titulo}' registrada en el historial.")
-            except ItemNoEncontradoError:
-                print("Canción no encontrada.")
+            if historial.esta_vacio():
+                print("El historial está vacío.")
+            else:
+                for cancion in historial.listar():
+                    print(cancion)
         elif opcion == "2":
+            try:
+                print(f"Última del historial: {historial.ver_ultima()}")
+            except PilaVaciaError as e:
+                print(e)
+        elif opcion == "3":
             try:
                 cancion = historial.deshacer_cancion()
                 print(f"Deshecho: '{cancion.titulo}' salió del historial.")
             except PilaVaciaError as e:
-                print(f"No se puede deshacer: {e}")
-        elif opcion == "3":
+                print(e)
+        elif opcion == "4":
             break
         else:
             print("Opción inválida.")
 
-def opcion_cola(biblioteca, cola):
+def opcion_cola(biblioteca, cola, historial):
     while True:
         print()
         print("=== 8. Cola de reproducción ===")
@@ -156,10 +159,12 @@ def opcion_cola(biblioteca, cola):
                 continue
             try:
                 cancion = biblioteca.buscar_id(id_cancion)
-                cola.encolar_cancion(cancion)
-                print(f"Canción '{cancion.titulo}' encolada.")
             except ItemNoEncontradoError:
                 print("Canción no encontrada.")
+                continue
+            cola.encolar_cancion(cancion)
+            historial.registrar_cancion(cancion)
+            print(f"Canción '{cancion.titulo}' encolada y registrada en el historial.")
         elif opcion == "2":
             try:
                 cancion = cola.reproducir_siguiente()
@@ -211,9 +216,9 @@ def main():
         elif opcion == "6":
             opcion_playlist(biblioteca, playlist)
         elif opcion == "7":
-            opcion_historial(biblioteca, historial)
+            opcion_historial(historial)
         elif opcion == "8":
-            opcion_cola(biblioteca, cola)
+            opcion_cola(biblioteca, cola, historial)
         elif opcion in {"3", "4", "9"}:
             pendiente()
         else:

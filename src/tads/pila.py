@@ -28,4 +28,9 @@ class Pila:
 
     def esta_vacia(self):
         return self._items.esta_vacia()
-    
+
+    def tamanio(self):
+        return self._items.tamanio()
+
+    def __iter__(self):
+        return iter(self._items)
