@@ -8,7 +8,7 @@ class Playlist:
 
     def agregar_cancion(self, cancion):
         if self._canciones.tamanio() >= self._tope:
-            raise ColeccionLlenaError("Playlist llena, máximo {self._tope} canciones")
+            raise ColeccionLlenaError(f"Playlist llena, máximo {self._tope} canciones")
         self._canciones.insertar_al_final(cancion)
     
     def eliminar(self, cancion):

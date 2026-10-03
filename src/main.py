@@ -88,7 +88,7 @@ def opcion_playlist(biblioteca, playlist):
             except ItemNoEncontradoError:
                 print("Canción no encontrada.")
             except ColeccionLlenaError as e:
-                print(f"La playlist está llena. {e}")
+                print(e)
         elif opcion == "3":
             entrada = input("Ingrese el ID de la canción a quitar: ").strip()
             try:

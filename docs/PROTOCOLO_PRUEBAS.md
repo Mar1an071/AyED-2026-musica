@@ -16,10 +16,10 @@ Mínimos: 8 casos escritos en E2; ejecutados en E3; 15 de regresión en E6 (pila
 | P06 | E1 | Ver detalle con id no numérico | id = abc | Mensaje id invalido, no se cae, vuelve al menú | pasa ✅ | |
 | P07 | E2 | Elegir opción de menú inválida | input = 99 | Mensaje: Opción inválida, vuelve a mostrar el menú | pasa ✅ | |
 | P08 | E2 | Dejar el input vacío y dar enter | input = `` (vacío) | No explota, trata como opción inválida y vuelve a preguntar | pasa ✅ | |
-| P09 | E3 | Agregar a la colección principal hasta el tope | equipo de 6 / equivalente | el séptimo falla con excepción propia |  |  |
-| P10 | E3 | Desapilar historial vacío | pila vacía | excepción propia, menú sigue |  |  |
-| P11 | E3 | Desencolar cola vacía | cola vacía | excepción propia, menú sigue |  |  |
-| P12 | E3 | Listar colección con el iterador | 2+ ítems | el orden coincide con las inserciones |  |  |
+| P09 | E3 | Agregar a la colección principal hasta el tope | equipo de 6 / equivalente | el séptimo falla con excepción propia | pasa ✅ |  |
+| P10 | E3 | Desapilar historial vacío | pila vacía | excepción propia, menú sigue | pasa ✅ |  |
+| P11 | E3 | Desencolar cola vacía | cola vacía | excepción propia, menú sigue | pasa ✅ |  |
+| P12 | E3 | Listar colección con el iterador | 2+ ítems | el orden coincide con las inserciones | pasa ✅ |  |
 | P13 | E4 | Búsqueda lineal de un nombre que existe |  | lo encuentra |  |  |
 | P14 | E4 | Búsqueda lineal de un nombre que no existe |  | no encontrado, sin traceback |  |  |
 | P15 | E4 | Búsqueda binaria con catálogo desordenado |  | avisa o reordena; no da un falso hit |  |  |
