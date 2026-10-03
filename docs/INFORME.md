@@ -69,11 +69,16 @@ Ejemplo 3 - Id inexistente: id_origen = 1000. biblioteca.buscar_id(1000) lanza I
 
 | TAD | Operaciones | Invariante |
 | --- | --- | --- |
-| ListaEnlazada |  |  |
-| Pila |  |  |
-| Cola |  |  |
+| ListaEnlazada | esta_vacia, tamanio, insertar_al_inicio, insertar_al_final, eliminar, buscar, __iter__, __len__, __getitem__ | _cabeza apunta al primer nodo o None; _tamanio es la cantidad exacta; el último nodo tiene siguiente = None; sin list de Python por abajo |
+| Pila | apilar, desapilar, ver_tope, esta_vacia, tamanio, __iter__ | LIFO (último en entrar, primero en salir): el tope es siempre _items._cabeza |
+| Cola | encolar, desencolar, ver_frente, esta_vacia | FIFO (primero en entrar, primero en salir): frente _cabeza, final el nodo con siguiente = None |
 
 Dónde se usa cada uno en el dominio.
+
+ListaEnlazada esta como base de Biblioteca._canciones y Playlist._canciones; Pila dentro de Historial._pila; Cola en ColaReproduccion._cola (incluímos que el historial se llena desde la cola).
+Encapsulamiento — aclara que _cabeza sí se lee, pero solo dentro de Pila y Cola, que son las clases dueñas de su lista.
+Excepciones propias — tabla de qué se lanza cuando y en qué opción se captura.
+
 
 ## 5. Complejidad (E4)
 
