@@ -2,7 +2,7 @@
 
 Actualizar **en cada entrega**. Si no usaron IA, dejar una fila que lo diga. No declarar cuando sí se usó anula la entrega.
 
-Fecha de esta versión del archivo: 9/9/26
+Fecha de esta versión del archivo: 3/10/26
 
 | Entrega | Fecha | Herramienta (ChatGPT, Cursor, Copilot, otra) | Para qué (diseño, código, debug, docs) | Qué pegaron o generaron | Qué reescribieron / revisaron a mano | Integrante |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -13,7 +13,7 @@ Fecha de esta versión del archivo: 9/9/26
   | E2 | 15-09-26 | Gemini | Como hacer una funcion recusiva  | Codigo  | Posterior a hacer varias consultas a Gemini, implemente un codigo el cual fue consultado con mis compañeros y corregido en conjunto. | Jazmin Mato  |
   | E2 | 17-09-2026 | opencode | docs | filas P16–P19 del protocolo de pruebas (casos de recursión) | nada | Agostina Leta |
 | E3 | 03-10-26 | OpenCode | codigo, debug | Consulta sobre como realizar las opciones 6, 7 y 8: playlist, historial y cola; lista enlanzada devolviendo True/False | Los errores que main pasaba Pila/Cola/Playlist como clases en vez de instancias, los implemente y revise a su vez. | Jazmin Mato |
-| E3 |  |  |  |  |  |  |
+| E3 | 2-10-2026 | No use IA en esta entrega | - | - | - | Mariano Encina |
 | E3 |  |  |  |  |  |  |
 | E4 |  |  |  |  |  |  |
 | E5 |  |  |  |  |  |  |
