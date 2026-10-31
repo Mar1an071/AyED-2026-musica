@@ -1,4 +1,4 @@
-from src.config import TEMA, CRITERIOS, ALGORITMOS
+from src.config import TEMA
 from src.dominio.biblioteca import Biblioteca
 from src.persistencia.texto import cargar_csv
 from src.excepciones import ItemNoEncontradoError
@@ -296,9 +296,9 @@ def main():
         elif opcion == "2":
             ver_detalle(biblioteca)
         elif opcion == "3":
-            busqueda_lineal(biblioteca, clave=input("Ingrese el título de la canción a buscar: "))
+            opcion_buscar(biblioteca)
         elif opcion == "4":
-            ordenar_insercion(biblioteca, clave=input("Ingrese el criterio de ordenamiento: "))
+            opcion_ordenar(biblioteca)
         elif opcion == "5":
             operacion_recursiva(biblioteca)
         elif opcion == "6":
