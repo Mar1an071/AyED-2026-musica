@@ -41,11 +41,7 @@ def busqueda_binaria(coleccion, clave, obtener_clave=None):
     return None
 
 def esta_ordenada(coleccion, obtener_clave=None):
-    """Devuelve True si la colección está ordenada ascendentemente por la clave.
-
-    Recorre la colección una sola vez: O(n) en tiempo y O(1) en espacio.
-    No usa sorted() ni list.sort().
-    """
+ 
     extractor = obtener_clave if obtener_clave is not None else (lambda x: x)
     anterior = None
     primero = True
@@ -56,3 +52,36 @@ def esta_ordenada(coleccion, obtener_clave=None):
         anterior = valor
         primero = False
     return True
+
+
+
+def busqueda_lineal(coleccion, clave, obtener_clave=None):
+        
+    for elemento in coleccion:
+        if obtener_clave is None:
+            if elemento == clave:
+                return elemento
+        elif obtener_clave(elemento) == clave:
+            return elemento
+    return None
+
+
+def busqueda_binaria(coleccion, clave, obtener_clave):
+    """
+   
+    """
+    izq = 0
+    der = len(coleccion) - 1
+    
+    while izq <= der:
+        medio = (izq + der) // 2
+        valor = obtener_clave(coleccion[medio])
+        
+        if valor == clave:
+            return coleccion[medio]
+        elif valor < clave:
+            izq = medio + 1  
+        else:
+            der = medio - 1  
+            
+    return None  
