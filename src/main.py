@@ -7,6 +7,8 @@ from src.dominio.playlist import Playlist
 from src.dominio.historial import Historial
 from src.dominio.cola_reproduccion import ColaReproduccion
 from src.excepciones import ColeccionLlenaError, PilaVaciaError, ColaVaciaError
+from src.algoritmos.busqueda import busqueda_binaria, busqueda_lineal
+from src.algoritmos.ordenamiento import ordenar_seleccion, ordenar_insercion
 
 TEMAS = {
     "pokedex": "Pokédex",
