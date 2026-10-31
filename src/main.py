@@ -7,7 +7,7 @@ from src.dominio.playlist import Playlist
 from src.dominio.historial import Historial
 from src.dominio.cola_reproduccion import ColaReproduccion
 from src.excepciones import ColeccionLlenaError, PilaVaciaError, ColaVaciaError
-from src.algoritmos.busqueda import busqueda_binaria, busqueda_lineal
+from src.algoritmos.busqueda import busqueda_binaria, busqueda_lineal, esta_ordenada
 from src.algoritmos.ordenamiento import ordenar_seleccion, ordenar_insercion
 
 TEMAS = {
@@ -71,11 +71,24 @@ def operacion_recursiva(biblioteca):
     except ItemNoEncontradoError:
         print("Cancion no encontrada")
 
+def esta_ordenada(coleccion, obtener_clave=None):
+    """Devuelve True si la colección está ordenada de menor a mayor por la clave."""
+    extractor = obtener_clave if obtener_clave is not None else (lambda x: x)
+    anterior = None
+    primero = True
+    for elemento in coleccion:
+        valor = extractor(elemento)
+        if not primero and valor < anterior:
+            return False
+        anterior = valor
+        primero = False
+    return True
+
 def opcion_buscar(biblioteca):
     print()
     print("=== 3. Buscar ===")
-    print("1. Por título (búsqueda lineal)")
-    print("2. Por título (búsqueda binaria)")
+    print("1. Nombre (lineal)")
+    print("2. Nombre (binaria)")
     print("3. Volver al menú principal")
     opcion = input("> ").strip()
     if opcion == "3":
@@ -84,9 +97,9 @@ def opcion_buscar(biblioteca):
         print("Opción inválida.")
         return
 
-    consulta = input("Ingresá el título: ").strip()
+    consulta = input("Ingresá el Nombre: ").strip()
     if not consulta:
-        print("El título no puede estar vacío.")
+        print("El nombre no puede estar vacío.")
         return
 
     clave = consulta.lower()
@@ -102,15 +115,15 @@ def opcion_buscar(biblioteca):
             print(f"Encontrada (búsqueda lineal): {resultado}")
         return
 
-    ordenadas = ordenar_insercion(
-        biblioteca.listar_canciones(), obtener_clave=obtener_titulo
-    )
-    print("Catálogo ordenado por título (inserción); usando búsqueda binaria.")
-    resultado = busqueda_binaria(ordenadas, clave, obtener_clave=obtener_titulo)
-    if resultado is None:
-        print(f"No se encontró '{consulta}' (búsqueda binaria).")
+    canciones = biblioteca.listar_canciones()
+    if esta_ordenada(canciones, obtener_titulo):
+        ordenadas = list(canciones)
     else:
-        print(f"Encontrada (búsqueda binaria): {resultado}")
+        ordenadas = ordenar_insercion(canciones, obtener_clave=obtener_titulo)
+        print("El catálogo no estaba ordenado por título. Se reordenó con inserción; usando búsqueda binaria.")
+
+    resultado = busqueda_binaria(ordenadas, clave, obtener_clave=obtener_titulo)
+
 
 def opcion_ordenar(biblioteca):
     print()
@@ -120,7 +133,7 @@ def opcion_ordenar(biblioteca):
     print("3. Por año")
     print("4. Por duración")
     print("5. Volver al menú principal")
-    criterio_opcion = input("Criterio > ").strip()
+    criterio_opcion = input(" > ").strip()
     if criterio_opcion == "5":
         return
     else:

@@ -39,3 +39,20 @@ def busqueda_binaria(coleccion, clave, obtener_clave=None):
             der = medio - 1
 
     return None
+
+def esta_ordenada(coleccion, obtener_clave=None):
+    """Devuelve True si la colección está ordenada ascendentemente por la clave.
+
+    Recorre la colección una sola vez: O(n) en tiempo y O(1) en espacio.
+    No usa sorted() ni list.sort().
+    """
+    extractor = obtener_clave if obtener_clave is not None else (lambda x: x)
+    anterior = None
+    primero = True
+    for elemento in coleccion:
+        valor = extractor(elemento)
+        if not primero and valor < anterior:
+            return False
+        anterior = valor
+        primero = False
+    return True
