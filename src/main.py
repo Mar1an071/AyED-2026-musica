@@ -1,4 +1,4 @@
-from src.config import TEMA
+from src.config import TEMA, CRITERIOS, ALGORITMOS
 from src.dominio.biblioteca import Biblioteca
 from src.persistencia.texto import cargar_csv
 from src.excepciones import ItemNoEncontradoError
@@ -16,6 +16,17 @@ TEMAS = {
     "musica": "Biblioteca musical",
 }
 
+CRITERIOS = {
+    "1": ("Título", lambda c: c.titulo.lower()),
+    "2": ("Artista", lambda c: c.artista.lower()),
+    "3": ("Año", lambda c: c.anio),
+    "4": ("Duración (seg)", lambda c: c.duracion_seg),
+}
+
+ALGORITMOS = {
+    "1": ("selección", ordenar_seleccion),
+    "2": ("inserción", ordenar_insercion),
+}
 
 def pendiente():
     print("Todavía no está implementado. Completar en la entrega que corresponde.")
@@ -59,6 +70,77 @@ def operacion_recursiva(biblioteca):
         mostrar_cadena_recursivo(cadena)
     except ItemNoEncontradoError:
         print("Cancion no encontrada")
+
+def opcion_buscar(biblioteca):
+    print()
+    print("=== 3. Buscar ===")
+    print("1. Por título (búsqueda lineal)")
+    print("2. Por título (búsqueda binaria)")
+    print("3. Volver al menú principal")
+    opcion = input("> ").strip()
+    if opcion == "3":
+        return
+    if opcion not in ("1", "2"):
+        print("Opción inválida.")
+        return
+
+    consulta = input("Ingresá el título: ").strip()
+    if not consulta:
+        print("El título no puede estar vacío.")
+        return
+
+    clave = consulta.lower()
+    obtener_titulo = lambda c: c.titulo.lower()
+
+    if opcion == "1":
+        resultado = busqueda_lineal(
+            biblioteca.listar_canciones(), clave, obtener_clave=obtener_titulo
+        )
+        if resultado is None:
+            print(f"No se encontró '{consulta}' (búsqueda lineal).")
+        else:
+            print(f"Encontrada (búsqueda lineal): {resultado}")
+        return
+
+    ordenadas = ordenar_insercion(
+        biblioteca.listar_canciones(), obtener_clave=obtener_titulo
+    )
+    print("Catálogo ordenado por título (inserción); usando búsqueda binaria.")
+    resultado = busqueda_binaria(ordenadas, clave, obtener_clave=obtener_titulo)
+    if resultado is None:
+        print(f"No se encontró '{consulta}' (búsqueda binaria).")
+    else:
+        print(f"Encontrada (búsqueda binaria): {resultado}")
+
+def opcion_ordenar(biblioteca):
+    print()
+    print("=== 4. Ordenar ===")
+    print("1. Por título")
+    print("2. Por artista")
+    print("3. Por año")
+    print("4. Por duración")
+    print("5. Volver al menú principal")
+    criterio_opcion = input("Criterio > ").strip()
+    if criterio_opcion == "5":
+        return
+    else:
+        if criterio_opcion not in CRITERIOS:
+            print("Opción inválida.")
+            return
+    nombre_criterio, obtener_clave = CRITERIOS[criterio_opcion]
+
+    print("1. Selección (no estable)")
+    print("2. Inserción (estable)")
+    algoritmo_opcion = input("Algoritmo > ").strip()
+    if algoritmo_opcion not in ALGORITMOS:
+        print("Opción inválida.")
+        return
+    nombre_algoritmo, algoritmo = ALGORITMOS[algoritmo_opcion]
+
+    ordenadas = algoritmo(biblioteca.listar_canciones(), obtener_clave=obtener_clave)
+    print(f"Catálogo ordenado por {nombre_criterio.lower()} ({nombre_algoritmo}).")
+    for cancion in ordenadas:
+        print(cancion)
 
 def opcion_playlist(biblioteca, playlist):
     while True:
@@ -213,6 +295,10 @@ def main():
             listar_canciones(biblioteca)
         elif opcion == "2":
             ver_detalle(biblioteca)
+        elif opcion == "3":
+            busqueda_lineal(biblioteca, clave=input("Ingrese el título de la canción a buscar: "))
+        elif opcion == "4":
+            ordenar_insercion(biblioteca, clave=input("Ingrese el criterio de ordenamiento: "))
         elif opcion == "5":
             operacion_recursiva(biblioteca)
         elif opcion == "6":
@@ -221,7 +307,7 @@ def main():
             opcion_historial(historial)
         elif opcion == "8":
             opcion_cola(biblioteca, cola, historial)
-        elif opcion in {"3", "4", "9"}:
+        elif opcion == "9":
             pendiente()
         else:
             print("Opción inválida.")
