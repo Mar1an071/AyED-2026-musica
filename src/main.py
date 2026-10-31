@@ -123,6 +123,10 @@ def opcion_buscar(biblioteca):
         print("El catálogo no estaba ordenado por título. Se reordenó con inserción; usando búsqueda binaria.")
 
     resultado = busqueda_binaria(ordenadas, clave, obtener_clave=obtener_titulo)
+    if resultado is None:
+        print(f"No se encontró '{consulta}' (búsqueda binaria).")
+    else:
+        print(f"Encontrada (búsqueda binaria): {resultado}")
 
 
 def opcion_ordenar(biblioteca):
@@ -142,9 +146,9 @@ def opcion_ordenar(biblioteca):
             return
     nombre_criterio, obtener_clave = CRITERIOS[criterio_opcion]
 
-    print("1. Selección (no estable)")
-    print("2. Inserción (estable)")
-    algoritmo_opcion = input("Algoritmo > ").strip()
+    print("1. Selección")
+    print("2. Inserción")
+    algoritmo_opcion = input(">").strip()
     if algoritmo_opcion not in ALGORITMOS:
         print("Opción inválida.")
         return
