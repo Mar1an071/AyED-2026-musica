@@ -15,6 +15,7 @@ Fecha de esta versión del archivo: 3/10/26
 | E3 | 03-10-26 | OpenCode | codigo, debug | Consulta sobre como realizar las opciones 6, 7 y 8: playlist, historial y cola; lista enlanzada devolviendo True/False | Los errores que main pasaba Pila/Cola/Playlist como clases en vez de instancias, los implemente y revise a su vez. | Jazmin Mato |
 | E3 | 2-10-2026 | No use IA en esta entrega | - | - | - | Mariano Encina |
 | E3 | 3-10-2026 | opencode | chequear si voy bien  | - | - | Leta Agostina |
+| E4 | 31-10-2026 | Opencode | correccion de codigo | corregir en main opcion_buscar y agrgar en busqueda esta_ordenada  |  | Jazmin Mato |
 | E4 | 31-10-2026 | notebooklm | codigo | ordenamiento busqueda y mediciones | - | Leta Agostina |
 | E4 | 1-11-2026 | Opencode | Corregir bugs | Corregí el apartado de ordenamiento que no estaba funcionando bien |  | Mariano Encina |
 | E5 |  |  |  |  |  |  |
