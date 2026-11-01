@@ -16,6 +16,7 @@ Fecha de esta versión del archivo: 3/10/26
 | E3 | 2-10-2026 | No use IA en esta entrega | - | - | - | Mariano Encina |
 | E3 | 3-10-2026 | opencode | chequear si voy bien  | - | - | Leta Agostina |
 | E4 | 31-10-2026 | notebooklm |  |  |  | Leta Agostina |
+| E4 | 1-11-2026 | Opencode | Corregir bugs | Corregí el apartado de ordenamiento que no estaba funcionando bien |  | Mariano Encina |
 | E5 |  |  |  |  |  |  |
 | E6 |  |  |  |  |  |  |
 

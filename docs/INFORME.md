@@ -84,26 +84,25 @@ Excepciones propias — tabla de qué se lanza cuando y en qué opción se captu
 
 | Operación | Tiempo | Espacio | Por qué |
 | --- | --- | --- | --- |
-| **listar catalogo** | $0(n)$ | $0(1)$ | Recorre consecutivamente los $n$ elementos del catálogo una sola vez [3].|
-|**busqueda lineal** | peor: $0(n)$ / mejor: $0(1)$ |$0(1)$ | Inspecciona cada elemento secuencialmente hasta encontrar la coincidencia o alcanzar el final [3, 4].| 
-| **busqueda binaria ** | $0(\log n)$ | $0(1)$ | Requiere coleccion ordenada; en cada paso divide el rango de búsqueda a la mitad [3, 5, 6]. |
-| **ordenamiento selleccion** | $0(n^2)$ siempre | $0(1)$ |dos bucles anidados que efectuan aproximadamente $\frac{n^2}{2}$ comparaciones, independientemente del orden previo [3, 7, 8]. |
-|**Ordenamiento Inserción** | Mejor: $O(n)$ / Peor: $O(n^2)$ | $O(1)$ | Si ya está ordenado realiza 1 comparación por elemento; si está invertido desplaza todo a la derecha [3, 8, 9]. |
+| **Listar catálogo** | $O(n)$ | $O(1)$ | Recorre consecutivamente los $n$ elementos del catálogo una sola vez. |
+| **Búsqueda lineal** | Peor: $O(n)$ / Mejor: $O(1)$ | $O(1)$ | Inspecciona cada elemento secuencialmente hasta encontrar la coincidencia o alcanzar el final. |
+| **Búsqueda binaria** | $O(\log n)$ | $O(1)$ | Requiere colección ordenada; en cada paso divide el rango de búsqueda a la mitad. |
+| **Ordenamiento Selección** | $O(n^2)$ siempre | $O(1)$ | Dos bucles anidados que efectúan aproximadamente $\frac{n^2}{2}$ comparaciones, independientemente del orden previo. |
+| **Ordenamiento Inserción** | Mejor: $O(n)$ / Peor: $O(n^2)$ | $O(1)$ | Si ya está ordenado realiza 1 comparación por elemento; si está invertido desplaza todo a la derecha. |
+| **Ver detalle de un ítem** | $O(n)$ | $O(1)$ | En la lista enlazada recorre secuencialmente los nodos hasta encontrar el ID coincidente. |
 
-En esta sección se analiza la complejidad teórica (notación Big-O) de las operaciones principales del sistema de gestión de la biblioteca musical y se contrasta con las mediciones de tiempo de ejecución reales [1, 3].
+En esta sección se analiza la complejidad teórica (notación Big-O) de las operaciones principales del sistema de gestión de la biblioteca musical y se contrasta con las mediciones de tiempo de ejecución reales con `time.perf_counter`.
 
 Mediciones (`time.perf_counter`):
 
-| Operación | n | segundos |
-| --- | --- | --- |
-| Operación | Dataset Original ($n = \dots$) | Dataset Agrandado ($10n = \dots$) | Comportamiento Observado |
-| :--- | :--- | :--- | :--- |
-| **Búsqueda lineal** | `0.0000XX s` | `0.0000YY s` | Crecimiento proporcional al tamaño ($\approx 10\times$) [11]. |
-| **Búsqueda binaria** | `0.0000AA s` | `0.0000BB s` | Incremento mínimo e imperceptible ($O(\log n)$) [6, 11]. |
-| **Ordenamiento Selección** | `0.0000CC s` | `0.0000DD s` | Crecimiento cuadrático ($\approx 100\times$ más tiempo) [8, 11]. |
-| **Ordenamiento Inserción** | `0.0000EE s` | `0.0000FF s` | Crecimiento cuadrático ($\approx 100\times$ más tiempo en el peor caso) [9, 11]. |
+| Operación | Dataset Original ($n = 67$) | Dataset Agrandado ($10n = 670$) | Comportamiento Observado |
+| :--- | :---: | :---: | :--- |
+| **Búsqueda lineal** | `0.00000521 s` | `0.00004713 s` | Crecimiento proporcional al tamaño ($\approx 9.1\times$, orden lineal $O(n)$). |
+| **Búsqueda binaria** | `0.00000131 s` | `0.00000170 s` | Incremento mínimo imperceptible ($\approx 1.3\times$, orden logarítmico $O(\log n)$). |
+| **Ordenamiento Selección** | `0.00035860 s` | `0.03532170 s` | Crecimiento cuadrático ($\approx 98.5\times$ más tiempo, orden $O(n^2)$). |
+| **Ordenamiento Inserción** | `0.00015760 s` | `0.01423060 s` | Crecimiento cuadrático ($\approx 90.3\times$ más tiempo en el peor caso, orden $O(n^2)$). |
 
-Resultados obtenidos mediante el script de mediciones (`src/algoritmos/mediciones.py`) comparando el catálogo original ($n$) frente al dataset ampliado ($10n$) [1, 2, 10, 11]:
+Resultados obtenidos mediante el script de mediciones (`python -m src.algoritmos.mediciones`) comparando el catálogo original ($n = 67$) frente al dataset ampliado ($10n = 670$).
 
 ## 6. Persistencia (E5)
 
