@@ -2,7 +2,7 @@
 
 Actualizar **en cada entrega**. Si no usaron IA, dejar una fila que lo diga. No declarar cuando sí se usó anula la entrega.
 
-Fecha de esta versión del archivo: 3/10/26
+Fecha de esta versión del archivo: 14/11/26
 
 | Entrega | Fecha | Herramienta (ChatGPT, Cursor, Copilot, otra) | Para qué (diseño, código, debug, docs) | Qué pegaron o generaron | Qué reescribieron / revisaron a mano | Integrante |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -18,7 +18,7 @@ Fecha de esta versión del archivo: 3/10/26
 | E4 | 31-10-2026 | Opencode | correccion de codigo | corregir en main opcion_buscar y agrgar en busqueda esta_ordenada  |  | Jazmin Mato |
 | E4 | 31-10-2026 | notebooklm | codigo | ordenamiento busqueda y mediciones | - | Leta Agostina |
 | E4 | 1-11-2026 | Opencode | Corregir bugs | Corregí el apartado de ordenamiento que no estaba funcionando bien |  | Mariano Encina |
-| E5 |  |  |  |  |  |  |
+| E5 | 14-11-2026 | Antigravity CLI | diseño, código | Consulta sobre empaquetado con struc.pack/unpack y cálculo de offset para seek | Defini el layout del registro ajutando los anchos de bytes para Cancion, la cabecera y las validaciones de archivo inválido  | Mariano Encina |
 | E6 |  |  |  |  |  |  |
 
 Compromiso: cualquiera del grupo puede explicar cualquier archivo del tag.

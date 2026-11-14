@@ -106,9 +106,31 @@ Resultados obtenidos mediante el script de mediciones (`python -m src.algoritmos
 
 ## 6. Persistencia (E5)
 
-- Layout del registro binario (campos, `struct`, anchos):
-- Header:
-- Cómo se actualiza un registro por posición:
+- **Layout del registro binario (campos, `struct`, anchos):**
+  - Formato: `struct.Struct("<I 50s 40s 35s 12s H H")` = **145 bytes** por registro.
+  - Campos del registro:
+    - `id`: unsigned int (`I`, 4 bytes).
+    - `titulo`: 50 bytes (`50s`, texto UTF-8 con padding de ceros `\x00`).
+    - `artista`: 40 bytes (`40s`, texto UTF-8 con padding de ceros `\x00`).
+    - `album`: 35 bytes (`35s`, texto UTF-8 con padding de ceros `\x00`).
+    - `genero`: 12 bytes (`12s`, texto UTF-8 con padding de ceros `\x00`).
+    - `anio`: unsigned short (`H`, 2 bytes).
+    - `duracion_seg`: unsigned short (`H`, 2 bytes).
+  - Anchos generosos definidos para evitar truncamiento de letras acentuadas y caracteres multi-byte en UTF-8.
+
+- **Header (Cabecera):**
+  - Formato: `struct.Struct("<4s 1s I")` = **9 bytes**.
+  - Campos:
+    - Magia: `b"AYED"` (4 bytes, firma identificadora de los archivos del TP).
+    - Tema: `b"M"` (1 byte, identifica que el archivo pertenece al tema Música).
+    - Cantidad: unsigned int (`I`, 4 bytes, número total de canciones almacenadas).
+
+- **Cómo se actualiza un registro por posición (Acceso directo O(1)):**
+  - Dado que todos los registros poseen un tamaño constante (145 bytes), la posición del registro $i$ (0-based) se calcula directamente como:
+    $$\text{offset} = \text{HEADER\_SIZE} + i \times \text{REGISTRO\_SIZE} = 9 + i \times 145$$
+  - La función `actualizar_registro(ruta, posicion, cancion)` abre el archivo en modo `"r+b"` (lectura/escritura binaria sin truncar), posiciona el cursor en dicho byte mediante `seek(offset)` y escribe únicamente los 145 bytes del registro empaquetado.
+  - Al no requerir lectura ni reescritura de los registros anteriores o posteriores, el costo temporal es estrictamente **$O(1)$** (acceso directo).
+  - El alta (`alta_binario`) se realiza agregando el registro al final con `seek(0, 2)` y actualizando el campo `cantidad` en el header (`seek(5)`). La baja (`baja_binario`) extrae el registro, compacta el archivo y actualiza el header.
 
 ## 7. Reparto de trabajo (E6)
 

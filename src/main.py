@@ -9,6 +9,11 @@ from src.dominio.cola_reproduccion import ColaReproduccion
 from src.excepciones import ColeccionLlenaError, PilaVaciaError, ColaVaciaError
 from src.algoritmos.busqueda import busqueda_binaria, busqueda_lineal, esta_ordenada
 from src.algoritmos.ordenamiento import ordenar_seleccion, ordenar_insercion
+from pathlib import Path
+from src.persistencia.binario import (
+    guardar_binario, cargar_binario, actualizar_registro, alta_binario, baja_binario, posicion_del_id
+)
+from src.excepciones import ArchivoInvalidoError
 
 TEMAS = {
     "pokedex": "Pokédex",
@@ -27,6 +32,11 @@ ALGORITMOS = {
     "1": ("selección", ordenar_seleccion),
     "2": ("inserción", ordenar_insercion),
 }
+
+RAIZ = Path(__file__).resolve().parent.parent
+DATA = RAIZ / "data"
+RUTA_BINARIO = DATA / "canciones.bin"
+RUTA_TXT = DATA / "canciones.txt"
 
 def pendiente():
     print("Todavía no está implementado. Completar en la entrega que corresponde.")
@@ -278,6 +288,81 @@ def opcion_cola(biblioteca, cola, historial):
             print("Opción inválida.")
 
 
+
+def opcion_archivos(biblioteca):
+    while True:
+        print()
+        print("=== 9. Guardar / cargar archivos ===")
+        print("  a) Cargar catálogo desde .txt de la cátedra")
+        print("  b) Guardar catálogo en .txt")
+        print("  c) Guardar catálogo en binario (.bin)")
+        print("  d) Cargar catálogo desde binario (.bin)")
+        print("  e) Modificar canción en binario por ID")
+        print("  f) Volver al menú principal")
+        opcion = input("  Subopción > ").strip().lower()
+
+        if opcion in ("f", "volver", "salir", "6"):
+            break
+
+        elif opcion in ("a", "1"):
+            print("Opción no implementada todavía.")
+
+        elif opcion in ("b", "2"):
+            print("Opción no implementada todavía.")
+
+        elif opcion in ("c", "3"):
+            try:
+                guardar_binario(RUTA_BINARIO, biblioteca.listar_canciones())
+                print(f"Catálogo guardado en binario: '{RUTA_BINARIO.name}'.")
+            except Exception as e:
+                print(f"Error al guardar binario: {e}")
+
+        elif opcion in ("d", "4"):
+            try:
+                entrada = input(f"Ruta del archivo (Enter para '{RUTA_BINARIO.name}'): ").strip()
+                ruta = DATA / entrada if entrada and not Path(entrada).is_absolute() else (Path(entrada) if entrada else RUTA_BINARIO)
+                canciones = cargar_binario(ruta)
+                biblioteca.reemplazar_canciones(canciones)
+                print(f"Catálogo cargado desde binario: '{ruta.name}' ({len(canciones)} canciones).")
+            except ArchivoInvalidoError as e:
+                print(f"Archivo inválido: {e}")
+            except Exception as e:
+                print(f"Error al cargar: {e}")
+
+        elif opcion in ("e", "5"):
+            try:
+                entrada_id = input("Ingrese el ID de la canción a modificar: ").strip()
+                id_buscado = int(entrada_id)
+                posicion = posicion_del_id(biblioteca.listar_canciones(), id_buscado)
+                cancion = biblioteca.buscar_id(id_buscado)
+                print(f"Canción actual: {cancion}")
+                nuevo_titulo = input(f"Nuevo título (Enter para mantener '{cancion.titulo}'): ").strip()
+                nuevo_artista = input(f"Nuevo artista (Enter para mantener '{cancion.artista}'): ").strip()
+                nuevo_album = input(f"Nuevo álbum (Enter para mantener '{cancion.album}'): ").strip()
+                nuevo_genero = input(f"Nuevo género (Enter para mantener '{cancion.genero}'): ").strip()
+                if nuevo_titulo:
+                    cancion.titulo = nuevo_titulo
+                if nuevo_artista:
+                    cancion.artista = nuevo_artista
+                if nuevo_album:
+                    cancion.album = nuevo_album
+                if nuevo_genero:
+                    cancion.genero = nuevo_genero
+                actualizar_registro(RUTA_BINARIO, posicion, cancion)
+                print(f"Canción ID {id_buscado} (pos {posicion}) actualizada con éxito en binario.")
+            except ValueError:
+                print("Dato inválido: el ID debe ser numérico.")
+            except ItemNoEncontradoError as e:
+                print(f"Error: {e}")
+            except ArchivoInvalidoError as e:
+                print(f"Error de archivo binario: {e}")
+            except FileNotFoundError:
+                print(f"No existe '{RUTA_BINARIO.name}'. Primero guardá el binario con la opción 9c.")
+
+        else:
+            print("Opción inválida.")
+
+
 def mostrar_menu():
     nombre = TEMAS.get(TEMA, TEMA or "(sin tema)")
     print()
@@ -325,7 +410,7 @@ def main():
         elif opcion == "8":
             opcion_cola(biblioteca, cola, historial)
         elif opcion == "9":
-            pendiente()
+            opcion_archivos(biblioteca)
         else:
             print("Opción inválida.")
 

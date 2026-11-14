@@ -15,3 +15,8 @@ class Biblioteca:
             if c.id == id:
                 return c
         raise ItemNoEncontradoError("Cancion no encontrada")
+
+    def reemplazar_canciones(self, lista_canciones):
+        self._canciones = ListaEnlazada()
+        for cancion in lista_canciones:
+            self._canciones.insertar_al_final(cancion)
