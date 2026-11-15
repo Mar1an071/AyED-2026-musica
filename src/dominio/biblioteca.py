@@ -20,3 +20,6 @@ class Biblioteca:
         self._canciones = ListaEnlazada()
         for cancion in lista_canciones:
             self._canciones.insertar_al_final(cancion)
+
+    def eliminar_cancion(self, cancion):
+         self._canciones.eliminar(cancion)

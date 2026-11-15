@@ -1,5 +1,6 @@
 from src.config import TEMA
 from src.dominio.biblioteca import Biblioteca
+from src.dominio.canciones import Cancion
 from src.persistencia.texto import cargar_csv, cargar_texto, guardar_texto
 from src.excepciones import ItemNoEncontradoError
 from src.dominio.recursion import cadena_versiones, mostrar_cadena_recursivo
@@ -33,6 +34,8 @@ ALGORITMOS = {
     "2": ("inserción", ordenar_insercion),
 }
 
+ENCABEZADOS = ["id", "titulo", "artista", "album", "genero", "anio", "duracion_seg"]
+
 RAIZ = Path(__file__).resolve().parent.parent
 DATA = RAIZ / "data"
 RUTA_BINARIO = DATA / "canciones.bin"
@@ -41,9 +44,42 @@ RUTA_TXT = DATA / "canciones.txt"
 def pendiente():
     print("Todavía no está implementado. Completar en la entrega que corresponde.")
 
+def filas_del_catalogo(biblioteca):
+    return [
+        {
+            "id": c.id,
+            "titulo": c.titulo,
+            "artista": c.artista,
+            "album": c.album,
+            "genero": c.genero,
+            "anio": c.anio,
+            "duracion_seg": c.duracion_seg,
+        }
+        for c in biblioteca.listar_canciones()
+    ]
+
+
+def guardar_todo(biblioteca):
+    """Deja memoria y los dos archivos con el mismo orden (regla de oro de E5)."""
+    guardar_texto(RUTA_TXT, filas_del_catalogo(biblioteca), ENCABEZADOS)
+    guardar_binario(RUTA_BINARIO, biblioteca.listar_canciones())
+
 def cargar_biblioteca():
     biblioteca = Biblioteca()
-    cargar_csv("data/canciones.csv",biblioteca)
+    try:
+        filas = cargar_texto(RUTA_TXT)
+        biblioteca.reemplazar_canciones([
+            Cancion(
+                int(f["id"]), f["titulo"], f["artista"], f["album"],
+                f["genero"], int(f["anio"]), int(f["duracion_seg"]),
+            )
+            for f in filas
+        ])
+        print(f"Catálogo cargado desde '{RUTA_TXT.name}' ({len(filas)} canciones).")
+    except ArchivoInvalidoError as e:
+        print(f"No se pudo cargar '{RUTA_TXT.name}': {e}")
+        print("Se usa el CSV de la cátedra como respaldo.")
+        cargar_csv(DATA / "canciones.csv", biblioteca)
     return biblioteca
 
 def listar_canciones(biblioteca):
@@ -176,7 +212,8 @@ def opcion_playlist(biblioteca, playlist):
         print("1. Listar canciones")
         print("2. Agregar canción")
         print("3. Quitar canción")
-        print("4. Volver al menú principal")
+        print("4. Alta/Baja/modificaciones")
+        print("5. Volver al menú principal")
         opcion = input("> ").strip()
         if opcion == "1":
             canciones = playlist.listar()
@@ -218,6 +255,33 @@ def opcion_playlist(biblioteca, playlist):
             except ItemNoEncontradoError:
                 print("Esa canción no está en la playlist.")
         elif opcion == "4":
+            print("1. Alta de canción")
+            print("2. Baja de canción")
+            print("3. Modificación de canción")
+            print("4. Volver")
+            subopcion = input("> ").strip()
+            if subopcion == "1":
+                try:
+                    alta_binario(RUTA_BINARIO, biblioteca)
+                    guardar_todo(biblioteca)
+                except Exception as e:
+                    print(f"Error al dar de alta: {e}")
+            elif subopcion == "2":
+                try:
+                    baja_binario(RUTA_BINARIO, biblioteca)
+                    guardar_todo(biblioteca)
+                except Exception as e:
+                    print(f"Error al dar de baja: {e}")
+            elif subopcion == "3":
+                try:
+                    opcion_archivos(biblioteca)
+                except Exception as e:
+                    print(f"Error al modificar: {e}")
+            elif subopcion == "4":
+                continue
+            else:
+                print("Opción inválida.")
+        elif opcion == "5":
             break
         else:
             print("Opción inválida.")
@@ -386,6 +450,7 @@ def opcion_archivos(biblioteca):
                 if nuevo_genero:
                     cancion.genero = nuevo_genero
                 actualizar_registro(RUTA_BINARIO, posicion, cancion)
+                guardar_texto(RUTA_TXT, filas_del_catalogo(biblioteca), ENCABEZADOS)
                 print(f"Canción ID {id_buscado} (pos {posicion}) actualizada con éxito en binario.")
             except ValueError:
                 print("Dato inválido: el ID debe ser numérico.")
