@@ -255,36 +255,101 @@ def opcion_playlist(biblioteca, playlist):
             except ItemNoEncontradoError:
                 print("Esa canción no está en la playlist.")
         elif opcion == "4":
-            print("1. Alta de canción")
-            print("2. Baja de canción")
-            print("3. Modificación de canción")
-            print("4. Volver")
-            subopcion = input("> ").strip()
-            if subopcion == "1":
-                try:
-                    alta_binario(RUTA_BINARIO, biblioteca)
-                    guardar_todo(biblioteca)
-                except Exception as e:
-                    print(f"Error al dar de alta: {e}")
-            elif subopcion == "2":
-                try:
-                    baja_binario(RUTA_BINARIO, biblioteca)
-                    guardar_todo(biblioteca)
-                except Exception as e:
-                    print(f"Error al dar de baja: {e}")
-            elif subopcion == "3":
-                try:
-                    opcion_archivos(biblioteca)
-                except Exception as e:
-                    print(f"Error al modificar: {e}")
-            elif subopcion == "4":
-                continue
-            else:
-                print("Opción inválida.")
+            opcion_abm_catalogo(biblioteca)
         elif opcion == "5":
             break
         else:
             print("Opción inválida.")
+
+
+def opcion_abm_catalogo(biblioteca):
+    """Alta / baja / modificaciones"""
+    while True:
+        print()
+        print("=== ABM del catálogo (persistente) ===")
+        print("1. Alta de canción")
+        print("2. Baja de canción")
+        print("3. Modificación de canción")
+        print("4. Volver")
+        opcion = input("> ").strip()
+
+        if opcion == "4":
+            return
+
+        elif opcion == "1":
+            try:
+                id_cancion = int(input("ID de la nueva canción: ").strip())
+                titulo = input("Título: ").strip()
+                artista = input("Artista: ").strip()
+                album = input("Álbum: ").strip()
+                genero = input("Género: ").strip()
+                anio = int(input("Año: ").strip())
+                duracion = int(input("Duración (seg): ").strip())
+            except ValueError:
+                print("Dato inválido: los campos numéricos deben ser números.")
+                continue
+            try:
+                biblioteca.buscar_id(id_cancion)
+                print("Ya existe una canción con ese ID.")
+                continue
+            except ItemNoEncontradoError:
+                pass
+            nueva = Cancion(id_cancion, titulo, artista, album, genero, anio, duracion)
+            biblioteca.agregar_canciones(nueva)          # memoria
+            if RUTA_BINARIO.exists():
+                alta_binario(RUTA_BINARIO, nueva)        # append al .bin
+            else:
+                guardar_binario(RUTA_BINARIO, biblioteca.listar_canciones())
+            guardar_texto(RUTA_TXT, filas_del_catalogo(biblioteca), ENCABEZADOS)
+            print(f"Alta OK: '{nueva.titulo}' (ID {nueva.id}).")
+
+        elif opcion == "2":
+            try:
+                id_cancion = int(input("ID de la canción a dar de baja: ").strip())
+                cancion = biblioteca.buscar_id(id_cancion)
+                posicion = posicion_del_id(biblioteca.listar_canciones(), id_cancion)
+            except ValueError:
+                print("Dato inválido: el ID debe ser numérico.")
+                continue
+            except ItemNoEncontradoError:
+                print("Canción no encontrada.")
+                continue
+            biblioteca.listar_canciones().eliminar(cancion)   # memoria
+            if RUTA_BINARIO.exists():
+                baja_binario(RUTA_BINARIO, posicion)          # compacta el .bin
+            guardar_texto(RUTA_TXT, filas_del_catalogo(biblioteca), ENCABEZADOS)
+            print(f"Baja OK: '{cancion.titulo}' (ID {id_cancion}).")
+
+        elif opcion == "3":
+            try:
+                id_cancion = int(input("ID de la canción a modificar: ").strip())
+                cancion = biblioteca.buscar_id(id_cancion)
+                posicion = posicion_del_id(biblioteca.listar_canciones(), id_cancion)
+            except ValueError:
+                print("Dato inválido: el ID debe ser numérico.")
+                continue
+            except ItemNoEncontradoError:
+                print("Canción no encontrada.")
+                continue
+            print(f"Canción actual: {cancion}")
+            nuevo_titulo = input(f"Nuevo título (Enter para mantener '{cancion.titulo}'): ").strip()
+            nuevo_artista = input(f"Nuevo artista (Enter para mantener '{cancion.artista}'): ").strip()
+            nuevo_album = input(f"Nuevo álbum (Enter para mantener '{cancion.album}'): ").strip()
+            nuevo_genero = input(f"Nuevo género (Enter para mantener '{cancion.genero}'): ").strip()
+            if nuevo_titulo:
+                cancion.titulo = nuevo_titulo
+            if nuevo_artista:
+                cancion.artista = nuevo_artista
+            if nuevo_album:
+                cancion.album = nuevo_album
+            if nuevo_genero:
+                cancion.genero = nuevo_genero
+            actualizar_registro(RUTA_BINARIO, posicion, cancion)
+            guardar_texto(RUTA_TXT, filas_del_catalogo(biblioteca), ENCABEZADOS)
+            print(f"Canción ID {id_cancion} (pos {posicion}) actualizada con éxito en binario.")
+        else:
+            print("Opción inválida.")
+
 
 def opcion_historial(historial):
     while True:

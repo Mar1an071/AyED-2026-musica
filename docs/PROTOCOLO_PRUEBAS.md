@@ -24,6 +24,6 @@ Mínimos: 8 casos escritos en E2; ejecutados en E3; 15 de regresión en E6 (pila
 | P14 | E4 | Búsqueda lineal de un nombre que no existe | título = "No Existe" | no encontrado, sin traceback | pasa ✅ | Menú 3 → 1. Muestra "No se encontró 'nombre' (búsqueda lineal)." y vuelve al menú. |
 | P15 | E4 | Búsqueda binaria con catálogo desordenado | título = "Bohemian Rhapsody" | avisa o reordena; no da un falso hit | pasa ✅ | Menú 3 → 2. El CLI verifica con esta_ordenada(); como el catálogo no está ordenado, reordena una copia con inserción, avisa y encuentra la cancion.|
 | P16 | E4 | Ordenar por un criterio y después por otro |  | el orden cambia | pasa ✅ |  |
-| P17 | E5 | Guardar CSV, salir, volver a entrar |  | los datos siguen |  |  |
-| P18 | E5 | Guardar binario y modificar un registro por id |  | al recargar, ese campo cambió |  |  |
+| P17 | E5 | Guardar CSV, salir, volver a entrar |  | los datos siguen | pasa ✅ |  |
+| P18 | E5 | Guardar binario y modificar un registro por id |  | al recargar, ese campo cambió | pasa ✅ |  |
 | P19 | E5 | Abrir un binario truncado o con magia mala | archivo basura | excepción de archivo inválido |  |  |
