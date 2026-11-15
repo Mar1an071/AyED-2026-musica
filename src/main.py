@@ -1,6 +1,6 @@
 from src.config import TEMA
 from src.dominio.biblioteca import Biblioteca
-from src.persistencia.texto import cargar_csv
+from src.persistencia.texto import cargar_csv, cargar_texto, guardar_texto
 from src.excepciones import ItemNoEncontradoError
 from src.dominio.recursion import cadena_versiones, mostrar_cadena_recursivo
 from src.dominio.playlist import Playlist
@@ -305,10 +305,47 @@ def opcion_archivos(biblioteca):
             break
 
         elif opcion in ("a", "1"):
-            print("Opción no implementada todavía.")
+            try:
+                filas = cargar_texto(RUTA_TXT)
+                from src.dominio.canciones import Cancion
+                canciones = [
+                    Cancion(
+                        int(f["id"]),
+                        f["titulo"],
+                        f["artista"],
+                        f["album"],
+                        f["genero"],
+                        int(f["anio"]),
+                        int(f["duracion_seg"]),
+                    )
+                    for f in filas
+                ]
+                biblioteca.reemplazar_canciones(canciones)
+                print(f"Catálogo cargado desde texto: '{RUTA_TXT.name}' ({len(canciones)} canciones).")
+            except ArchivoInvalidoError as e:
+                print(f"Archivo inválido: {e}")
+            except Exception as e:
+                print(f"Error al cargar texto: {e}")
 
         elif opcion in ("b", "2"):
-            print("Opción no implementada todavía.")
+            try:
+                encabezados = ["id", "titulo", "artista", "album", "genero", "anio", "duracion_seg"]
+                filas = [
+                    {
+                        "id": c.id,
+                        "titulo": c.titulo,
+                        "artista": c.artista,
+                        "album": c.album,
+                        "genero": c.genero,
+                        "anio": c.anio,
+                        "duracion_seg": c.duracion_seg,
+                    }
+                    for c in biblioteca.listar_canciones()
+                ]
+                guardar_texto(RUTA_TXT, filas, encabezados)
+                print(f"Catálogo guardado en texto: '{RUTA_TXT.name}'.")
+            except Exception as e:
+                print(f"Error al guardar texto: {e}")
 
         elif opcion in ("c", "3"):
             try:
