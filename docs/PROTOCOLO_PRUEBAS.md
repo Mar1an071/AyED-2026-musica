@@ -26,4 +26,4 @@ Mínimos: 8 casos escritos en E2; ejecutados en E3; 15 de regresión en E6 (pila
 | P16 | E4 | Ordenar por un criterio y después por otro |  | el orden cambia | pasa ✅ |  |
 | P17 | E5 | Guardar CSV, salir, volver a entrar |  | los datos siguen | pasa ✅ |  |
 | P18 | E5 | Guardar binario y modificar un registro por id |  | al recargar, ese campo cambió | pasa ✅ |  |
-| P19 | E5 | Abrir un binario truncado o con magia mala | archivo basura | excepción de archivo inválido |  |  |
+| P19 | E5 | Abrir un binario truncado o con magia mala | archivo basura | excepción de archivo inválido | pasa ✅ |  |

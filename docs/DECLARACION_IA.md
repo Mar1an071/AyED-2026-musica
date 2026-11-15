@@ -19,6 +19,7 @@ Fecha de esta versión del archivo: 14/11/26
 | E4 | 31-10-2026 | notebooklm | codigo | ordenamiento busqueda y mediciones | - | Leta Agostina |
 | E4 | 1-11-2026 | Opencode | Corregir bugs | Corregí el apartado de ordenamiento que no estaba funcionando bien |  | Mariano Encina |
 | E5 | 14-11-2026 | Antigravity CLI | diseño, código | Consulta sobre empaquetado con struc.pack/unpack y cálculo de offset para seek | Defini el layout del registro ajutando los anchos de bytes para Cancion, la cabecera y las validaciones de archivo inválido  | Mariano Encina |
+| E5 | 15-11-2026 | OpenCode | codigo | funcion opcion_abm_catalogo (alta/baja/modificación persistentes) y guardado en .txt/.bin en main.py | Revise y probe alta, baja y modificación | Jazmin Mato |
 | E6 |  |  |  |  |  |  |
 
 Compromiso: cualquiera del grupo puede explicar cualquier archivo del tag.
